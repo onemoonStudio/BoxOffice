@@ -8,13 +8,22 @@
 
 import UIKit
 
-// MARK: ARC 생각해보기
+// MARK: ARC 생각해보기 그리고 동일한 셀렉션 뷰를 또 만들어야 하나?
 class MovieDatasCell: UITableViewCell{
     
     @IBOutlet weak var Mimage: UIImageView!
     @IBOutlet weak var MTitle: UILabel!
     @IBOutlet weak var MAge: UILabel!
     @IBOutlet weak var MInfo: UILabel!
-    @IBOutlet weak var MOpening: UILabel!
+    @IBOutlet weak var MDate: UILabel!
+    
+}
+
+class MoviewCollectionDataCell: UICollectionViewCell {
+    @IBOutlet weak var MImage: UIImageView!
+    @IBOutlet weak var MTitle: UILabel!
+    @IBOutlet weak var MAge: UILabel!
+    @IBOutlet weak var MInfo: UILabel!
+    @IBOutlet weak var MDate: UILabel!
     
 }
