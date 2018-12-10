@@ -24,6 +24,26 @@ struct APIResponse: Codable {
 //    id: "5a54c286e8a71d136fb5378e"
 //},
 
+struct UpdatedMovieData {
+    var basic: MovieData
+    var imageData: Data
+    
+    init(_ basic: MovieData , _ imageData: Data) {
+        self.basic = basic
+        self.imageData = imageData
+    }
+    
+    var infoString: String {
+        return "평점 : \(self.basic.user_rating) 예매순위 : \(self.basic.reservation_grade) 예매율 : \(self.basic.reservation_rate)"
+    }
+    var collectionViewInfoString: String {
+        return "\(self.basic.reservation_grade)위(\(self.basic.user_rating)) / \(self.basic.reservation_rate)%"
+    }
+    var openingString: String {
+        return "개봉일 : \(self.basic.date)"
+    }
+}
+
 struct MovieData: Codable {
     let grade: Int
     let thumb: String
@@ -36,6 +56,9 @@ struct MovieData: Codable {
     
     var infoString: String {
         return "평점 : \(self.user_rating) 예매순위 : \(self.reservation_grade) 예매율 : \(self.reservation_rate)"
+    }
+    var collectionViewInfoString: String {
+        return "\(self.reservation_grade)위(\(user_rating)) / \(self.reservation_rate)%"
     }
     var openingString: String {
         return "개봉일 : \(self.date)"
