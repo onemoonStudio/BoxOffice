@@ -87,8 +87,50 @@ struct MovieData: Codable {
 //    운 세계의 문이 열린다!", genre: "판타지, 드라마"
 //}
 
-struct MovieDetail: Codable {
-    var hello: String
+struct MovieDetail: Codable, Hashable {
+    let audience: Int
+    let grade: Int
+    let actor: String
+    let duration: Int
+    let director: String
+    let synopsis: String
+    let genre: String
+    let image: String
+    let reservation_grade: Int
+    let title: String
+    let reservation_rate: Double
+    let user_rating: Double
+    let date: String
+    let id: String
+    
+    var openingString: String {
+        return "\(self.date)개봉"
+    }
+    var genreAndRunningTimeString: String {
+        return "\(self.genre)/\(self.duration)분"
+    }
+    var reservationString: String {
+        return "\(self.reservation_grade)위/\(self.reservation_rate)%"
+    }
+    var audienceString: String {
+        var result: String = ""
+        var audienceNumber: Int = self.audience
+        while true {
+            if ( audienceNumber / 1000 > 0 && result == "" ) {
+                result = "\( String(audienceNumber%1000) )"
+                audienceNumber /= 1000
+            } else if audienceNumber / 1000 > 0 {
+                result = "\( String(audienceNumber%1000) ),\( result )"
+                audienceNumber /= 1000
+            } else {
+                result = "\( audienceNumber ),\( result )"
+                break;
+            }
+        }
+        return result
+    }
+    
+    
 }
 
 //
@@ -102,3 +144,23 @@ struct MovieDetail: Codable {
 //    contents:"정말 다섯 번은 넘게 운듯 ᅲᅲᅲ 감동 쩔어요.꼭 보셈 두 번 보셈"
 //},
 
+struct CommentResponse: Codable {
+    let movie_id: String
+    let comments: [MovieComment]
+}
+
+struct MovieComment: Codable, Hashable {
+//    let rating: Double
+    let rating: Int
+    let timestamp: Double
+    let writer: String
+    let movie_id: String
+    let contents: String
+    
+    var timeString: String {
+        let date: Date = Date(timeIntervalSince1970: self.timestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        return dateFormatter.string(from: date)
+    }
+}

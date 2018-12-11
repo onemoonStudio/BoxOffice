@@ -21,6 +21,7 @@ class FirstViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
          NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
         loadingIndicator.startAnimating()
@@ -65,6 +66,12 @@ class FirstViewController: UIViewController {
     @IBAction func showSortingAlertSheet(_ sender: UIBarButtonItem) {
         present(sortingAlert, animated: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let detailView: DetailViewController = segue.destination as? DetailViewController else { return }
+        guard let cell = sender as? MovieDatasCell else { return }
+        detailView.movieId = cell.MId.text!
+    }
 
 }
 
@@ -73,6 +80,7 @@ extension FirstViewController: UITableViewDataSource {
         guard let cell: MovieDatasCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? MovieDatasCell else { return UITableViewCell() }
         
         let movieData: MovieData = SingletonData.sharedInstance.movieDatas[indexPath.row].basic
+        let movieImagedata: Data = SingletonData.sharedInstance.movieDatas[indexPath.row].imageData
         cell.MTitle.text = movieData.title
         var ageLabelColor: UIColor
         switch movieData.grade {
@@ -101,17 +109,13 @@ extension FirstViewController: UITableViewDataSource {
         cell.MInfo.text = movieData.infoString
         cell.MDate.text = movieData.openingString
         cell.MImage.image = nil
+        cell.MId.text = movieData.id
         
         
-        DispatchQueue.global().async {
-            guard let imageURL = URL(string: movieData.thumb) else { return }
-            guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-
-            DispatchQueue.main.async {
-                if let index: IndexPath = tableView.indexPath(for: cell) {
-                    if index.row == indexPath.row {
-                        cell.MImage.image = UIImage.init(data: imageData)
-                    }
+        DispatchQueue.main.async {
+            if let index: IndexPath = tableView.indexPath(for: cell) {
+                if index.row == indexPath.row {
+                    cell.MImage.image = UIImage.init(data: movieImagedata)
                 }
             }
         }
@@ -121,6 +125,7 @@ extension FirstViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SingletonData.sharedInstance.movieDatas.count
     }
+    
 }
 
 extension FirstViewController: UITableViewDelegate {

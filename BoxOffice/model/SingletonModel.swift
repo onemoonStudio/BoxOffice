@@ -18,7 +18,6 @@ let changeDataOrderNotification: Notification.Name = Notification.Name.init("cha
 class SingletonData {
     static let sharedInstance = SingletonData()
     
-//    var movieDatas: [MovieData]
     var movieDatas: [UpdatedMovieData]
     
     private init() {
@@ -40,9 +39,15 @@ class SingletonData {
                 let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
                 let tempData: [MovieData] = apiResponse.movies
                 for item in tempData {
-                    let tempItem: UpdatedMovieData = UpdatedMovieData(item,data)
+                    guard let imageURL = URL(string: item.thumb) else { return }
+                    guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
+                    
+                    let tempItem: UpdatedMovieData = UpdatedMovieData(item,imageData)
                     self.movieDatas.append(tempItem)
                 }
+                self.orderingData(1)
+                // 정렬이 안되는 것 같음 확인해보기
+                
                 NotificationCenter.default.post(name: didReceiveDataNotification, object: nil, userInfo: nil)
                 
             } catch(let netErr) {
