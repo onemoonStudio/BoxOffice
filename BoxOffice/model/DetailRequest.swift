@@ -11,6 +11,7 @@ import Foundation
 let didReceiveMovieDetailData: Notification.Name = Notification.Name.init("didReceiveDetailData")
 let didRecieveCommentData: Notification.Name = Notification.Name.init("didRecieveCommentData")
 let detailNetworkError: Notification.Name = Notification.Name.init("detailNetworkError")
+let detailCommentsNetworkError: Notification.Name = Notification.Name.init("detailCommentsError")
 
 func detailRequest(_ id: String) {
     guard let detailAPIURL = URL(string: "http://connect-boxoffice.run.goorm.io/movie?id=\(id)") else { return }
@@ -55,7 +56,7 @@ func detailCommentRequest(_ id: String) {
 
         if let error = error {
             print(error.localizedDescription)
-//            NotificationCenter.default.post(name: detailNetworkError, object: nil, userInfo:nil)
+            NotificationCenter.default.post(name: detailCommentsNetworkError, object: nil, userInfo:nil)
             return
         }
         guard let data = data else { return }
@@ -63,7 +64,7 @@ func detailCommentRequest(_ id: String) {
         do {
             let apiResponse: CommentResponse = try JSONDecoder().decode(CommentResponse.self, from: data)
             if apiResponse.comments.count == 0 {
-                NotificationCenter.default.post(name: detailNetworkError, object: nil, userInfo:nil)
+                NotificationCenter.default.post(name: detailCommentsNetworkError, object: nil, userInfo:nil)
                 return
             }
             let commentDatas: [MovieComment] = apiResponse.comments
@@ -71,7 +72,7 @@ func detailCommentRequest(_ id: String) {
             
         } catch (let netErr) {
             print(netErr.localizedDescription)
-            NotificationCenter.default.post(name: detailNetworkError, object: nil, userInfo:nil)
+            NotificationCenter.default.post(name: detailCommentsNetworkError, object: nil, userInfo:nil)
         }
     }
     dataTask.resume()
