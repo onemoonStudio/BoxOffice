@@ -10,23 +10,21 @@ import UIKit
 
 // MARK: ARC 생각해보기 그리고 동일한 셀렉션 뷰를 또 만들어야 하나?
 class MovieDatasCell: UITableViewCell{
-    
-    @IBOutlet weak var MImage: UIImageView!
-    @IBOutlet weak var MTitle: UILabel!
-    @IBOutlet weak var MAge: UILabel!
-    @IBOutlet weak var MInfo: UILabel!
-    @IBOutlet weak var MDate: UILabel!
-    @IBOutlet weak var MId: UILabel!
-    
+    @IBOutlet weak var movieImage: UIImageView!
+    @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet weak var movieAge: UILabel!
+    @IBOutlet weak var movieInfo: UILabel!
+    @IBOutlet weak var movieDate: UILabel!
+    @IBOutlet weak var movieId: UILabel!
 }
 
 class MovieCollectionDataCell: UICollectionViewCell {
-    @IBOutlet weak var MImage: UIImageView!
-    @IBOutlet weak var MTitle: UILabel!
-    @IBOutlet weak var MAge: UILabel!
-    @IBOutlet weak var MInfo: UILabel!
-    @IBOutlet weak var MDate: UILabel!
-    @IBOutlet weak var MId: UILabel!
+    @IBOutlet weak var movieImage: UIImageView!
+    @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet weak var movieAge: UILabel!
+    @IBOutlet weak var movieInfo: UILabel!
+    @IBOutlet weak var movieDate: UILabel!
+    @IBOutlet weak var movieId: UILabel!
 }
 
 class FiveStars: UIView {
@@ -49,6 +47,21 @@ class FiveStars: UIView {
     }
 }
 
+class MovieDetailInformationCell: UITableViewCell {
+    @IBOutlet weak var mainPosterImageView: UIImageView!
+    @IBOutlet weak var mainTitleLabel: UILabel!
+    @IBOutlet weak var mainGradeImage: UIImageView!
+    @IBOutlet weak var mainDateLabel: UILabel!
+    @IBOutlet weak var mainGenreLabel: UILabel!
+    @IBOutlet weak var leftInfoReservationRateLabel: UILabel!
+    @IBOutlet weak var midInfoUserRatingLabel: UILabel!
+    @IBOutlet weak var mainStarsView: UIView!
+    @IBOutlet weak var rightInfoAudienceLabel: UILabel!
+    @IBOutlet weak var synopsisLabel: UILabel!
+    @IBOutlet weak var directorLabel: UILabel!
+    @IBOutlet weak var actorsLabel: UILabel!
+}
+
 class MovieCommentCell: UITableViewCell {
     @IBOutlet weak var writer: UILabel!
     @IBOutlet var starImages: [UIImageView]!
@@ -66,13 +79,6 @@ class MovieCommentCell: UITableViewCell {
             } else {
                 self.starImages[order].image = UIImage(named: "\(preImageName)empty")
             }
-//            if (  < 0.5 ){
-//                self.starImages[order].image = UIImage(named: "\(preImageName)empty")
-//            } else if ( 0.5 <= rating && rating < 1 ) {
-//                self.starImages[order].image = UIImage(named: "\(preImageName)half")
-//            } else {
-//                self.starImages[order].image = UIImage(named: "\(preImageName)full")
-//            }
         }
     }
 }

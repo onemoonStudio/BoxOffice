@@ -70,7 +70,7 @@ class FirstViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let detailView: DetailViewController = segue.destination as? DetailViewController else { return }
         guard let cell = sender as? MovieDatasCell else { return }
-        detailView.movieId = cell.MId.text!
+        detailView.movieId = cell.movieId.text!
     }
 
 }
@@ -81,7 +81,7 @@ extension FirstViewController: UITableViewDataSource {
         
         let movieData: MovieData = SingletonData.sharedInstance.movieDatas[indexPath.row].basic
         let movieImagedata: Data = SingletonData.sharedInstance.movieDatas[indexPath.row].imageData
-        cell.MTitle.text = movieData.title
+        cell.movieTitle.text = movieData.title
         var ageLabelColor: UIColor
         switch movieData.grade {
         case 0:
@@ -99,23 +99,23 @@ extension FirstViewController: UITableViewDataSource {
         default:
             ageLabelColor = UIColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }
-        cell.MAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
-        cell.MAge.backgroundColor = ageLabelColor
-        cell.MAge.layer.masksToBounds = true
-        cell.MAge.layer.cornerRadius = 15.0
-        cell.MAge.textColor = UIColor.white
+        cell.movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
+        cell.movieAge.backgroundColor = ageLabelColor
+        cell.movieAge.layer.masksToBounds = true
+        cell.movieAge.layer.cornerRadius = 15.0
+        cell.movieAge.textColor = UIColor.white
 //        cell.MAge.highlightedTextColor = UIColor.white
         // highlighted 된거 물어보기
-        cell.MInfo.text = movieData.infoString
-        cell.MDate.text = movieData.openingString
-        cell.MImage.image = nil
-        cell.MId.text = movieData.id
+        cell.movieInfo.text = movieData.infoString
+        cell.movieDate.text = movieData.openingString
+        cell.movieImage.image = nil
+        cell.movieId.text = movieData.id
         
         
         DispatchQueue.main.async {
             if let index: IndexPath = tableView.indexPath(for: cell) {
                 if index.row == indexPath.row {
-                    cell.MImage.image = UIImage.init(data: movieImagedata)
+                    cell.movieImage.image = UIImage.init(data: movieImagedata)
                 }
             }
         }

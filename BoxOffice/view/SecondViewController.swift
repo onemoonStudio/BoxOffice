@@ -76,7 +76,7 @@ class SecondViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let detailView: DetailViewController = segue.destination as? DetailViewController else { return }
         guard let cell = sender as? MovieCollectionDataCell else { return }
-        detailView.movieId = cell.MId.text!
+        detailView.movieId = cell.movieId.text!
     }
     
 
@@ -94,7 +94,7 @@ extension SecondViewController: UICollectionViewDataSource {
         let movieData: MovieData = SingletonData.sharedInstance.movieDatas[indexPath.item].basic
         let movieImageData: Data = SingletonData.sharedInstance.movieDatas[indexPath.item].imageData
         
-        cell.MTitle.text = movieData.title
+        cell.movieTitle.text = movieData.title
         var ageLabelColor: UIColor
         switch movieData.grade {
         case 0:
@@ -112,20 +112,20 @@ extension SecondViewController: UICollectionViewDataSource {
         default:
             ageLabelColor = UIColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }
-        cell.MAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
-        cell.MAge.backgroundColor = ageLabelColor
-        cell.MAge.layer.masksToBounds = true
-        cell.MAge.layer.cornerRadius = 15.0
-        cell.MAge.textColor = UIColor.white
+        cell.movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
+        cell.movieAge.backgroundColor = ageLabelColor
+        cell.movieAge.layer.masksToBounds = true
+        cell.movieAge.layer.cornerRadius = 15.0
+        cell.movieAge.textColor = UIColor.white
         //        cell.MAge.highlightedTextColor = UIColor.white
         // highlighted 된거 물어보기
-        cell.MInfo.text = movieData.collectionViewInfoString
-        cell.MDate.text = movieData.date
-        cell.MImage.image = nil
-        cell.MId.text = movieData.id
+        cell.movieInfo.text = movieData.collectionViewInfoString
+        cell.movieDate.text = movieData.date
+        cell.movieImage.image = nil
+        cell.movieId.text = movieData.id
         
         DispatchQueue.main.async {
-            cell.MImage.image = UIImage.init(data: movieImageData)
+            cell.movieImage.image = UIImage.init(data: movieImageData)
             // 왜 안되는 걸까? -> 아래 해결 하기 순서에 맞춘 데이터
 //            if let index: IndexPath = collectionView.indexPath(for: cell) {
 //                if index.item == indexPath.item {
