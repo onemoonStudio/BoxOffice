@@ -25,6 +25,12 @@ class DetailViewController: UIViewController {
     var movieComments: [MovieComment] = []
     var networkErrorAlert: UIAlertController = UIAlertController()
     var commentNetworkErrorAlert: UIAlertController = UIAlertController()
+//    let imageTapGesture: UITapGestureRecognizer = {
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageFullScreen(_:)))
+//        tapGesture.numberOfTapsRequired = 1
+//        return tapGesture
+//    }()
+    
     
     
     override func viewDidLoad() {
@@ -46,7 +52,6 @@ class DetailViewController: UIViewController {
         commentNetworkErrorAlert = UIAlertController(title: "네트워크 에러", message: "한줄평을 불러올 수 없습니다.", preferredStyle: .alert)
         let commentOkAction = UIAlertAction(title: "확인", style: .default, handler: nil)
         commentNetworkErrorAlert.addAction(commentOkAction)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,6 +101,23 @@ class DetailViewController: UIViewController {
         self.networkErrorAlert.dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
     }
+    
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard let nextViewController: PictureFullScreenViewController = segue.destination as? PictureFullScreenViewController else { return }
+//        guard let preparedImage: UIImage = UIImage(data: moviePosterData) else { return }
+//        nextViewController.preparedImage = preparedImage
+//    }
+    
+    @objc func imageFullScreen(_ sender: UITapGestureRecognizer) {
+        let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let pictureFullScreenVC: PictureFullScreenViewController = mainStoryBoard.instantiateViewController(withIdentifier: "PictureFullScreen") as? PictureFullScreenViewController else { return }
+        guard let prepareImage: UIImage = UIImage(data: moviePosterData) else { return }
+        pictureFullScreenVC.preparedImage = prepareImage
+        show(pictureFullScreenVC, sender: nil)
+
+    }
+    
 }
 
 extension DetailViewController: UITableViewDataSource {
@@ -123,6 +145,10 @@ extension DetailViewController: UITableViewDataSource {
             let movieDetailData = self.movieDetailData
             
             movieDetailCell.mainPosterImageView.image = UIImage.init(data: self.moviePosterData)
+            let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageFullScreen(_:)))
+            imageTapGesture.numberOfTapsRequired = 1
+            movieDetailCell.mainPosterImageView.addGestureRecognizer(imageTapGesture)
+            
             movieDetailCell.mainTitleLabel.text = movieDetailData.title
 //            // 0 12 15 19
             movieDetailCell.mainGradeImage.image = UIImage(named: "ic_\(movieDetailData.grade)")
