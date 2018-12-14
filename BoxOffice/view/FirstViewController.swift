@@ -5,9 +5,6 @@
 //  Created by Hyeontae on 06/12/2018.
 //  Copyright © 2018 onemoon. All rights reserved.
 //
-// TODO: cell 눌렀을때 age hightlighted
-// TODO: MAge 설정 부분 따로 빼기
-
 
 import UIKit
 
@@ -17,14 +14,21 @@ class FirstViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     let cellIdentifier: String = "movieTableCell"
+    let refreshControl: UIRefreshControl = UIRefreshControl()
+    var networkErrorAlert: UIAlertController = UIAlertController()
     var sortingAlert: UIAlertController = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-         NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: moviesDataRequestError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: updateDataNotification, object: nil)
         loadingIndicator.startAnimating()
+        
+        networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
+        networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         
         self.navigationItem.title = "예매율순"
         sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
@@ -46,6 +50,16 @@ class FirstViewController: UIViewController {
         sortingAlert.addAction(sortingByDate)
         sortingAlert.addAction(cancelAction)
         
+        refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
+    }
+    
+    @objc func mainNetworkError(_ noti: Notification) {
+        present(networkErrorAlert,animated: true)
+        DispatchQueue.main.async {
+            self.loadingIndicator.stopAnimating()
+        }
     }
     
     @objc func didReceiveData(_ noti: Notification) {
@@ -60,6 +74,15 @@ class FirstViewController: UIViewController {
             self.navigationItem.title = newTitle
             self.loadingIndicator.stopAnimating()
             self.tableView.reloadData()
+        }
+    }
+    @objc func refreshHandler(_ refreshControl: UIRefreshControl) {
+        SingletonData.sharedInstance.requestData(initRequest: false)
+    }
+    @objc func updateData(_ noti: Notification){
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }
     }
     

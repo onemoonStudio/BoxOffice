@@ -14,6 +14,8 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     let cellIdentifider: String = "movieCollectionViewCell"
+    let refreshControl: UIRefreshControl = UIRefreshControl()
+    var networkErrorAlert: UIAlertController = UIAlertController()
     var sortingAlert: UIAlertController = UIAlertController()
     var halfWidth: CGFloat = UIScreen.main.bounds.width / 2.0
     
@@ -22,10 +24,25 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: moviesDataRequestError, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: updateDataNotification, object: nil)
 //        loadingIndicator.startAnimating()
         
-        self.navigationItem.title = "예매율순"
+        networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
+        networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        
+        switch SingletonData.sharedInstance.nowOrderType {
+        case 1:
+            self.navigationItem.title = "예매율순"
+        case 2:
+            self.navigationItem.title = "큐레이션"
+        case 3:
+            self.navigationItem.title = "개봉일순"
+        default:
+            self.navigationItem.title = "예매율순"
+        }
+        
         sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
         let sortingByReservation = UIAlertAction(title: "예매율", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
@@ -45,6 +62,8 @@ class SecondViewController: UIViewController {
         sortingAlert.addAction(sortingByDate)
         sortingAlert.addAction(cancelAction)
         
+        refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
+        collectionView.addSubview(refreshControl)
         
         let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsets.init(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
@@ -52,6 +71,13 @@ class SecondViewController: UIViewController {
         flowLayout.minimumInteritemSpacing = 10
         flowLayout.itemSize = CGSize(width: halfWidth - 10, height: 320)
         self.collectionView.collectionViewLayout = flowLayout
+    }
+    
+    @objc func mainNetworkError(_ noti: Notification) {
+        present(networkErrorAlert,animated: true)
+        DispatchQueue.main.async {
+            self.loadingIndicator.stopAnimating()
+        }
     }
     
 //    @objc func didReceiveData(_ noti: Notification) {
@@ -66,6 +92,15 @@ class SecondViewController: UIViewController {
             self.navigationItem.title = newTitle
             self.loadingIndicator.stopAnimating()
             self.collectionView.reloadData()
+        }
+    }
+    @objc func refreshHandler(_ refreshControl: UIRefreshControl) {
+        SingletonData.sharedInstance.requestData(initRequest: false)
+    }
+    @objc func updateData(_ noti: Notification){
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+            self.refreshControl.endRefreshing()
         }
     }
     
