@@ -127,14 +127,10 @@ extension FirstViewController: UITableViewDataSource {
         cell.movieAge.layer.masksToBounds = true
         cell.movieAge.layer.cornerRadius = 15.0
         cell.movieAge.textColor = UIColor.white
-//        cell.MAge.highlightedTextColor = UIColor.white
-        // highlighted 된거 물어보기
         cell.movieInfo.text = movieData.infoString
         cell.movieDate.text = movieData.openingString
         cell.movieImage.image = nil
         cell.movieId.text = movieData.id
-        
-        
         DispatchQueue.main.async {
             if let index: IndexPath = tableView.indexPath(for: cell) {
                 if index.row == indexPath.row {

@@ -21,40 +21,7 @@ class SingletonData {
     
     private init() {
 //        self.movieDatas = []
-
         self.requestData(initRequest: true)
-//        guard let apiURL = URL(string: "http://connect-boxoffice.run.goorm.io/movies?order_type=0") else { return }
-//        let session: URLSession = URLSession(configuration: .default)
-//        let dataTask: URLSessionDataTask = session.dataTask(with: apiURL) {
-//            (data: Data? , response: URLResponse? , error: Error? ) in
-//
-//            if let error = error {
-//                print(error.localizedDescription)
-//                return
-//            }
-//
-//            guard let data = data else { return }
-//
-//            do{
-//                let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
-//                let tempData: [MovieData] = apiResponse.movies
-//                for item in tempData {
-//                    guard let imageURL = URL(string: item.thumb) else { return }
-//                    guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-//
-//                    let tempItem: UpdatedMovieData = UpdatedMovieData(item,imageData)
-//                    self.movieDatas.append(tempItem)
-//                }
-//                self.orderingData(1)
-//                // 정렬이 안되는 것 같음 확인해보기
-//
-//                NotificationCenter.default.post(name: didReceiveDataNotification, object: nil, userInfo: nil)
-//
-//            } catch(let netErr) {
-//                print(netErr.localizedDescription)
-//            }
-//        }
-//        dataTask.resume()
     }
     
     func requestData(initRequest: Bool) {
@@ -85,16 +52,6 @@ class SingletonData {
                     self.movieDatas.append(tempItem)
                 }
                 
-//                switch orderType {
-//                case 1:
-//                    self.orderingData(1)
-//                case 2:
-//                    self.orderingData(2)
-//                case 3:
-//                    self.orderingData(3)
-//                default:
-//                    self.orderingData(1)
-//                }
                 self.orderingData(self.nowOrderType)
                 
                 if initRequest {
@@ -102,8 +59,6 @@ class SingletonData {
                 } else {
                         NotificationCenter.default.post(name: updateDataNotification, object: nil, userInfo: nil)
                 }
-                
-                
             } catch(let netErr) {
                 print(netErr.localizedDescription)
                 NotificationCenter.default.post(name: moviesDataRequestError, object: nil, userInfo: nil)
@@ -131,6 +86,7 @@ class SingletonData {
         
         NotificationCenter.default.post(name: changeDataOrderNotification, object: nil, userInfo: ["navigationBarTitle" : navigationBarTitle])
     }
+    
     func dataStringToDate(_ dateString: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

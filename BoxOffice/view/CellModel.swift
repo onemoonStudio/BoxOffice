@@ -8,7 +8,6 @@
 
 import UIKit
 
-// MARK: ARC 생각해보기 그리고 동일한 셀렉션 뷰를 또 만들어야 하나?
 class MovieDatasCell: UITableViewCell{
     @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
@@ -84,6 +83,7 @@ class MovieCommentCell: UITableViewCell {
 }
 
 // hexcode Color
+// 따로 빼자
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int, alpha: CGFloat) {
         self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: alpha)

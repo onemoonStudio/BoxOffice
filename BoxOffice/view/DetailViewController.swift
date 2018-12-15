@@ -20,7 +20,6 @@ class DetailViewController: UIViewController {
     let commentCellIdentifier: String = "commentCell"
     var movieId: String = ""
     var movieDetailData: MovieDetail = MovieDetail()
-//    var movieDetailData: [MovieDetail] = [MovieDetail()]
     var moviePosterData: Data = Data()
     var movieComments: [MovieComment] = []
     var networkErrorAlert: UIAlertController = UIAlertController()
@@ -30,8 +29,6 @@ class DetailViewController: UIViewController {
 //        tapGesture.numberOfTapsRequired = 1
 //        return tapGesture
 //    }()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,13 +98,6 @@ class DetailViewController: UIViewController {
         self.networkErrorAlert.dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
     }
-    
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard let nextViewController: PictureFullScreenViewController = segue.destination as? PictureFullScreenViewController else { return }
-//        guard let preparedImage: UIImage = UIImage(data: moviePosterData) else { return }
-//        nextViewController.preparedImage = preparedImage
-//    }
     
     @objc func imageFullScreen(_ sender: UITapGestureRecognizer) {
         let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -179,12 +169,6 @@ extension DetailViewController: UITableViewDataSource {
             return commentCell
         }
     }
-    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//
-//        return "check Date"
-//
-//    }
     
 }
 

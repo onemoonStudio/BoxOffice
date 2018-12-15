@@ -45,9 +45,6 @@ func detailRequest(_ id: String) {
     dataTask.resume()
 }
 
-
-
-
 func detailCommentRequest(_ id: String) {
     guard let detailAPIURL = URL(string: "http://connect-boxoffice.run.goorm.io/comments?movie_id=\(id)") else { return }
     let session: URLSession = URLSession(configuration: .default)

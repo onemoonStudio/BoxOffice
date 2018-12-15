@@ -23,11 +23,9 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: moviesDataRequestError, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: updateDataNotification, object: nil)
-//        loadingIndicator.startAnimating()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
@@ -80,12 +78,6 @@ class SecondViewController: UIViewController {
         }
     }
     
-//    @objc func didReceiveData(_ noti: Notification) {
-//        DispatchQueue.main.async {
-//            self.loadingIndicator.stopAnimating()
-//            self.collectionView.reloadData()
-//        }
-//    }
     @objc func orderingData(_ noti: Notification){
         DispatchQueue.main.async {
             guard let newTitle: String = noti.userInfo?["navigationBarTitle"] as? String else { return }
@@ -152,8 +144,6 @@ extension SecondViewController: UICollectionViewDataSource {
         cell.movieAge.layer.masksToBounds = true
         cell.movieAge.layer.cornerRadius = 15.0
         cell.movieAge.textColor = UIColor.white
-        //        cell.MAge.highlightedTextColor = UIColor.white
-        // highlighted 된거 물어보기
         cell.movieInfo.text = movieData.collectionViewInfoString
         cell.movieDate.text = movieData.date
         cell.movieImage.image = nil
@@ -178,12 +168,10 @@ extension SecondViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
     }
-    
 }
+
 extension SecondViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: halfWidth-10, height: 320)
-//    }
+    // 없애기
 }
 
 
