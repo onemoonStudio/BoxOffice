@@ -15,6 +15,23 @@ class MovieDatasCell: UITableViewCell{
     @IBOutlet weak var movieInfo: UILabel!
     @IBOutlet weak var movieDate: UILabel!
     @IBOutlet weak var movieId: UILabel!
+    
+    func setColorForAge(_ age: Int) {
+        var ageColor: UIColor
+        switch age {
+        case 0:
+            ageColor = UIColor.allAgeGreen
+        case 12:
+            ageColor = UIColor.twelveBlue
+        case 15:
+            ageColor = UIColor.fifteenOrange
+        case 19:
+            ageColor = UIColor.nineteenRed
+        default:
+            ageColor = UIColor.allAgeGreen
+        }
+        self.movieAge.backgroundColor = ageColor
+    }
 }
 
 class MovieCollectionDataCell: UICollectionViewCell {
@@ -24,6 +41,23 @@ class MovieCollectionDataCell: UICollectionViewCell {
     @IBOutlet weak var movieInfo: UILabel!
     @IBOutlet weak var movieDate: UILabel!
     @IBOutlet weak var movieId: UILabel!
+    
+    func setColorForAge(_ age: Int) {
+        var ageColor: UIColor
+        switch age {
+        case 0:
+            ageColor = UIColor.allAgeGreen
+        case 12:
+            ageColor = UIColor.twelveBlue
+        case 15:
+            ageColor = UIColor.fifteenOrange
+        case 19:
+            ageColor = UIColor.nineteenRed
+        default:
+            ageColor = UIColor.allAgeGreen
+        }
+        self.movieAge.backgroundColor = ageColor
+    }
 }
 
 class FiveStars: UIView {
@@ -79,13 +113,5 @@ class MovieCommentCell: UITableViewCell {
                 self.starImages[order].image = UIImage(named: "\(preImageName)empty")
             }
         }
-    }
-}
-
-// hexcode Color
-// 따로 빼자
-extension UIColor {
-    convenience init(red: Int, green: Int, blue: Int, alpha: CGFloat) {
-        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: alpha)
     }
 }
