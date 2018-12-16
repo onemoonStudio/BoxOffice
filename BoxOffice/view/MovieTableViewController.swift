@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MovieTableViewController.swift
 //  BoxOffice
 //
 //  Created by Hyeontae on 06/12/2018.
@@ -100,27 +100,12 @@ class MovieTableViewController: UIViewController {
 
 extension MovieTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: MovieDatasCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? MovieDatasCell else { return UITableViewCell() }
-        
-        let movieData: MovieData = SingletonData.sharedInstance.movieDatas[indexPath.row].basic
+        guard let cell: MovieDatasCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as?  MovieDatasCell else { return UITableViewCell() }
         let movieImagedata: Data = SingletonData.sharedInstance.movieDatas[indexPath.row].imageData
         
-        cell.movieTitle.text = movieData.title
-        cell.movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
-        cell.setColorForAge(movieData.grade)
-        cell.movieAge.layer.masksToBounds = true
-        cell.movieAge.layer.cornerRadius = 15.0
-        cell.movieAge.textColor = UIColor.white
-        cell.movieInfo.text = movieData.infoString
-        cell.movieDate.text = movieData.openingString
-        cell.movieImage.image = nil
-        cell.movieId.text = movieData.id
+        cell.configure(indexPath.row)
         DispatchQueue.main.async {
-            if let index: IndexPath = tableView.indexPath(for: cell) {
-                if index.row == indexPath.row {
-                    cell.movieImage.image = UIImage.init(data: movieImagedata)
-                }
-            }
+            cell.movieImage.image = UIImage(data: movieImagedata)
         }
         
         return cell

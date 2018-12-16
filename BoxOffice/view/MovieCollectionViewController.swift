@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  MovieCollectionViewController.swift
 //  BoxOffice
 //
 //  Created by Hyeontae on 06/12/2018.
@@ -64,7 +64,7 @@ class MovieCollectionViewController: UIViewController {
         collectionView.addSubview(refreshControl)
         
         let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = UIEdgeInsets.init(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
+        flowLayout.sectionInset = UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
         flowLayout.minimumLineSpacing = 10
         flowLayout.minimumInteritemSpacing = 10
         flowLayout.itemSize = CGSize(width: halfWidth - 10, height: 320)
@@ -118,28 +118,12 @@ extension MovieCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: MovieCollectionDataCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifider, for: indexPath) as? MovieCollectionDataCell  else { return UICollectionViewCell() }
         
-        let movieData: MovieData = SingletonData.sharedInstance.movieDatas[indexPath.item].basic
         let movieImageData: Data = SingletonData.sharedInstance.movieDatas[indexPath.item].imageData
         
-        cell.movieTitle.text = movieData.title
-        cell.movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
-        cell.setColorForAge(movieData.grade)
-        cell.movieAge.layer.masksToBounds = true
-        cell.movieAge.layer.cornerRadius = 15.0
-        cell.movieAge.textColor = UIColor.white
-        cell.movieInfo.text = movieData.collectionViewInfoString
-        cell.movieDate.text = movieData.date
-        cell.movieImage.image = nil
-        cell.movieId.text = movieData.id
+        cell.configure(indexPath.item)
         
         DispatchQueue.main.async {
-            cell.movieImage.image = UIImage.init(data: movieImageData)
-            // 왜 안되는 걸까? -> 아래 해결 하기 순서에 맞춘 데이터
-//            if let index: IndexPath = collectionView.indexPath(for: cell) {
-//                if index.item == indexPath.item {
-//                    cell.MImage.image = UIImage.init(data: movieImageData)
-//                }
-//            }
+            cell.movieImage.image = UIImage(data: movieImageData)
         }
         
         return cell

@@ -8,10 +8,10 @@
 
 import Foundation
 
-let didReceiveDataNotification: Notification.Name = Notification.Name.init("didReceiveData")
-let changeDataOrderNotification: Notification.Name = Notification.Name.init("changeDataOrder")
-let updateDataNotification: Notification.Name = Notification.Name.init("updateData")
-let moviesDataRequestError: Notification.Name = Notification.Name.init("moviesDataRequestError")
+let didReceiveDataNotification: Notification.Name = Notification.Name("didReceiveData")
+let changeDataOrderNotification: Notification.Name = Notification.Name("changeDataOrder")
+let updateDataNotification: Notification.Name = Notification.Name("updateData")
+let moviesDataRequestError: Notification.Name = Notification.Name("moviesDataRequestError")
 
 class SingletonData {
     static let sharedInstance = SingletonData()
