@@ -29,7 +29,8 @@ class PictureFullScreenViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
+    
+    @IBAction func swipeGestureForPopViewController(_ sender: UISwipeGestureRecognizer) {
         navigationController?.popViewController(animated: true)
     }
     

@@ -24,11 +24,6 @@ class DetailViewController: UIViewController {
     var movieComments: [MovieComment] = []
     var networkErrorAlert: UIAlertController = UIAlertController()
     var commentNetworkErrorAlert: UIAlertController = UIAlertController()
-//    let imageTapGesture: UITapGestureRecognizer = {
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageFullScreen(_:)))
-//        tapGesture.numberOfTapsRequired = 1
-//        return tapGesture
-//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,11 +50,6 @@ class DetailViewController: UIViewController {
         super.viewWillAppear(animated)
         detailRequest(movieId)
         detailCommentRequest(movieId)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.networkErrorAlert.dismiss(animated: true, completion: nil)
     }
     
     @objc func didRecieveDetailData(_ noti: Notification) {
@@ -105,7 +95,6 @@ class DetailViewController: UIViewController {
         guard let prepareImage: UIImage = UIImage(data: moviePosterData) else { return }
         pictureFullScreenVC.preparedImage = prepareImage
         show(pictureFullScreenVC, sender: nil)
-
     }
     
 }
@@ -130,7 +119,7 @@ extension DetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            // detailInformation
+            // detail Information
             guard let movieDetailCell: MovieDetailInformationCell = tableView.dequeueReusableCell(withIdentifier: movieDetailCellIndicator, for: indexPath) as? MovieDetailInformationCell else { return UITableViewCell() }            
             let movieDetailData = self.movieDetailData
             
@@ -138,9 +127,7 @@ extension DetailViewController: UITableViewDataSource {
             let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageFullScreen(_:)))
             imageTapGesture.numberOfTapsRequired = 1
             movieDetailCell.mainPosterImageView.addGestureRecognizer(imageTapGesture)
-            
             movieDetailCell.mainTitleLabel.text = movieDetailData.title
-//            // 0 12 15 19
             movieDetailCell.mainGradeImage.image = UIImage(named: "ic_\(movieDetailData.grade)")
             movieDetailCell.mainDateLabel.text = movieDetailData.openingString
             movieDetailCell.mainGenreLabel.text = movieDetailData.genreAndRunningTimeString
@@ -170,10 +157,4 @@ extension DetailViewController: UITableViewDataSource {
         }
     }
     
-}
-
-extension DetailViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//    }
 }
