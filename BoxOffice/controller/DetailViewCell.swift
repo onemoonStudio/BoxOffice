@@ -64,10 +64,10 @@ class MovieCommentCell: UITableViewCell {
     @IBOutlet weak var timeString: UILabel!
     @IBOutlet weak var comment: UILabel!
     
-    func fillStarWithImageInt(_ inputRating: Int) {
+    func fillStarWithImageInt(_ inputRating: Double) {
         let preImageName: String = "ic_star_large_"
         for order in 0...4 {
-            let temp: Int = inputRating - order*2
+            let temp: Int = Int(inputRating) - order*2
             if temp > 1 {
                 self.starImages[order].image = UIImage(named: "\(preImageName)full")
             } else if temp == 1 {
