@@ -99,7 +99,7 @@ movie datas & movie Detail에 대한 요청을 비동기 방식으로 처리하�
 
 ## 앱 시연 동영상 링크
 
-[ YouTube ](https://www.youtube.com/watch?v=bZJLtEL-REE)
+[ YouTube ](https://youtu.be/jYeT6EyA_Qo)
 
 
 
