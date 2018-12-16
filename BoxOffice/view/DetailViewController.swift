@@ -5,9 +5,6 @@
 //  Created by Hyeontae on 09/12/2018.
 //  Copyright © 2018 onemoon. All rights reserved.
 //
-// 평점 별 표시
-// 누적 관객수 , 표시
-// 아래 comments 구현
 
 import UIKit
 
@@ -121,25 +118,15 @@ extension DetailViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             // detail Information
             guard let movieDetailCell: MovieDetailInformationCell = tableView.dequeueReusableCell(withIdentifier: movieDetailCellIndicator, for: indexPath) as? MovieDetailInformationCell else { return UITableViewCell() }            
-            let movieDetailData = self.movieDetailData
             
-            movieDetailCell.mainPosterImageView.image = UIImage.init(data: self.moviePosterData)
+            movieDetailCell.configure(self.movieDetailData , imageData: self.moviePosterData)
+            guard let mainStars = movieDetailCell.mainStarsView as? FiveStars else { return UITableViewCell() }
+            mainStars.fillStarWithImage(movieDetailData.user_rating)
+            
             let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageFullScreen(_:)))
             imageTapGesture.numberOfTapsRequired = 1
             movieDetailCell.mainPosterImageView.addGestureRecognizer(imageTapGesture)
-            movieDetailCell.mainTitleLabel.text = movieDetailData.title
-            movieDetailCell.mainGradeImage.image = UIImage(named: "ic_\(movieDetailData.grade)")
-            movieDetailCell.mainDateLabel.text = movieDetailData.openingString
-            movieDetailCell.mainGenreLabel.text = movieDetailData.genreAndRunningTimeString
-            movieDetailCell.leftInfoReservationRateLabel.text = movieDetailData.reservationString
-            movieDetailCell.midInfoUserRatingLabel.text = String(movieDetailData.user_rating)
-            guard let mainStars = movieDetailCell.mainStarsView as? FiveStars else { return UITableViewCell() }
-            mainStars.fillStarWithImage(movieDetailData.user_rating)
-            movieDetailCell.rightInfoAudienceLabel.text = movieDetailData.audienceString
-            movieDetailCell.synopsisLabel.text = movieDetailData.synopsis
-            movieDetailCell.directorLabel.text = movieDetailData.director
-            movieDetailCell.actorsLabel.text = movieDetailData.actor
-            
+
             movieDetailCell.selectionStyle = .none
             return movieDetailCell
         } else {
@@ -147,10 +134,7 @@ extension DetailViewController: UITableViewDataSource {
             tableView.separatorColor = UIColor.white
             guard let commentCell: MovieCommentCell = tableView.dequeueReusableCell(withIdentifier: self.commentCellIdentifier, for: indexPath) as? MovieCommentCell else { return UITableViewCell() }
             let commentData: MovieComment = movieComments[indexPath.row]
-            commentCell.writer.text = commentData.writer
-            commentCell.timeString.text = commentData.timeString
-            commentCell.comment.text = commentData.contents
-            commentCell.fillStarWithImageInt(commentData.rating)
+            commentCell.configure(commentData)
             
             commentCell.selectionStyle = .none
             return commentCell

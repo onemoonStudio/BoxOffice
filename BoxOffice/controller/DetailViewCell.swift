@@ -1,64 +1,12 @@
 //
-//  CellModel.swift
+//  DetailViewCell.swift
 //  BoxOffice
 //
-//  Created by Hyeontae on 06/12/2018.
+//  Created by Hyeontae on 16/12/2018.
 //  Copyright © 2018 onemoon. All rights reserved.
 //
 
 import UIKit
-
-class MovieDatasCell: UITableViewCell{
-    @IBOutlet weak var movieImage: UIImageView!
-    @IBOutlet weak var movieTitle: UILabel!
-    @IBOutlet weak var movieAge: UILabel!
-    @IBOutlet weak var movieInfo: UILabel!
-    @IBOutlet weak var movieDate: UILabel!
-    @IBOutlet weak var movieId: UILabel!
-    
-    func setColorForAge(_ age: Int) {
-        var ageColor: UIColor
-        switch age {
-        case 0:
-            ageColor = UIColor.allAgeGreen
-        case 12:
-            ageColor = UIColor.twelveBlue
-        case 15:
-            ageColor = UIColor.fifteenOrange
-        case 19:
-            ageColor = UIColor.nineteenRed
-        default:
-            ageColor = UIColor.allAgeGreen
-        }
-        self.movieAge.backgroundColor = ageColor
-    }
-}
-
-class MovieCollectionDataCell: UICollectionViewCell {
-    @IBOutlet weak var movieImage: UIImageView!
-    @IBOutlet weak var movieTitle: UILabel!
-    @IBOutlet weak var movieAge: UILabel!
-    @IBOutlet weak var movieInfo: UILabel!
-    @IBOutlet weak var movieDate: UILabel!
-    @IBOutlet weak var movieId: UILabel!
-    
-    func setColorForAge(_ age: Int) {
-        var ageColor: UIColor
-        switch age {
-        case 0:
-            ageColor = UIColor.allAgeGreen
-        case 12:
-            ageColor = UIColor.twelveBlue
-        case 15:
-            ageColor = UIColor.fifteenOrange
-        case 19:
-            ageColor = UIColor.nineteenRed
-        default:
-            ageColor = UIColor.allAgeGreen
-        }
-        self.movieAge.backgroundColor = ageColor
-    }
-}
 
 class FiveStars: UIView {
     @IBOutlet var starImages: [UIImageView]!
@@ -93,6 +41,21 @@ class MovieDetailInformationCell: UITableViewCell {
     @IBOutlet weak var synopsisLabel: UILabel!
     @IBOutlet weak var directorLabel: UILabel!
     @IBOutlet weak var actorsLabel: UILabel!
+    
+    func configure(_ data: MovieDetail ,imageData: Data) {
+        let movieDetailData = data
+        mainPosterImageView.image = UIImage(data: imageData)
+        mainTitleLabel.text = movieDetailData.title
+        mainGradeImage.image = UIImage(named: "ic_\(movieDetailData.grade)")
+        mainDateLabel.text = movieDetailData.openingString
+        mainGenreLabel.text = movieDetailData.genreAndRunningTimeString
+        leftInfoReservationRateLabel.text = movieDetailData.reservationString
+        midInfoUserRatingLabel.text = String(movieDetailData.user_rating)
+        rightInfoAudienceLabel.text = movieDetailData.audienceString
+        synopsisLabel.text = movieDetailData.synopsis
+        directorLabel.text = movieDetailData.director
+        actorsLabel.text = movieDetailData.actor
+    }
 }
 
 class MovieCommentCell: UITableViewCell {
@@ -113,5 +76,13 @@ class MovieCommentCell: UITableViewCell {
                 self.starImages[order].image = UIImage(named: "\(preImageName)empty")
             }
         }
+    }
+    
+    func configure(_ data: MovieComment) {
+        let commentData = data
+        writer.text = commentData.writer
+        timeString.text = commentData.timeString
+        comment.text = commentData.contents
+        fillStarWithImageInt(commentData.rating)
     }
 }

@@ -8,10 +8,10 @@
 
 import Foundation
 
-let didReceiveMovieDetailData: Notification.Name = Notification.Name.init("didReceiveDetailData")
-let didRecieveCommentData: Notification.Name = Notification.Name.init("didRecieveCommentData")
-let detailNetworkError: Notification.Name = Notification.Name.init("detailNetworkError")
-let detailCommentsNetworkError: Notification.Name = Notification.Name.init("detailCommentsError")
+let didReceiveMovieDetailData: Notification.Name = Notification.Name("didReceiveDetailData")
+let didRecieveCommentData: Notification.Name = Notification.Name("didRecieveCommentData")
+let detailNetworkError: Notification.Name = Notification.Name("detailNetworkError")
+let detailCommentsNetworkError: Notification.Name = Notification.Name("detailCommentsError")
 
 func detailRequest(_ id: String) {
     guard let detailAPIURL = URL(string: "http://connect-boxoffice.run.goorm.io/movie?id=\(id)") else { return }
