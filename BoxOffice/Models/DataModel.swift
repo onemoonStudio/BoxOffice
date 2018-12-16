@@ -123,8 +123,7 @@ struct CommentResponse: Codable {
 }
 
 struct MovieComment: Codable, Hashable {
-//    let rating: Double
-    let rating: Int
+    let rating: Double
     let timestamp: Double
     let writer: String
     let movie_id: String
