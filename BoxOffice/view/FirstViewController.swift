@@ -104,26 +104,10 @@ extension FirstViewController: UITableViewDataSource {
         
         let movieData: MovieData = SingletonData.sharedInstance.movieDatas[indexPath.row].basic
         let movieImagedata: Data = SingletonData.sharedInstance.movieDatas[indexPath.row].imageData
+        
         cell.movieTitle.text = movieData.title
-        var ageLabelColor: UIColor
-        switch movieData.grade {
-        case 0:
-            // 35FF4E
-            ageLabelColor = UIColor.init(red: 0x78, green: 0xB3, blue: 0x7E, alpha: 1.0)
-        case 12:
-            // 50A8F0
-            ageLabelColor = UIColor.init(red: 0x50, green: 0xA8, blue: 0xF0, alpha: 1.0)
-        case 15:
-            // EF9532
-            ageLabelColor = UIColor.init(red: 0xEF, green: 0x95, blue: 0x32, alpha: 1.0)
-        case 19:
-            // E53D44
-            ageLabelColor = UIColor.init(red: 0xE5, green: 0x3D, blue: 0x44, alpha: 1.0)
-        default:
-            ageLabelColor = UIColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        }
         cell.movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
-        cell.movieAge.backgroundColor = ageLabelColor
+        cell.setColorForAge(movieData.grade)
         cell.movieAge.layer.masksToBounds = true
         cell.movieAge.layer.cornerRadius = 15.0
         cell.movieAge.textColor = UIColor.white
