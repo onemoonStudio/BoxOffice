@@ -25,10 +25,10 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didRecieveDetailData(_:)), name: didReceiveMovieDetailData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentsData(_:)), name: didRecieveCommentData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveNetworkError(_:)), name: detailNetworkError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentNetworkError(_:)), name: detailCommentsNetworkError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didRecieveDetailData), name: .didReceiveMovieDetailData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsData), name: .didRecieveCommentData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNetworkError), name: .detailNetworkError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentNetworkError(_:)), name: .detailCommentsNetworkError, object: nil)
         loadingIndicator.startAnimating()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
@@ -76,8 +76,10 @@ class DetailViewController: UIViewController {
     }
     
     @objc func didReceiveCommentNetworkError(_ noti: Notification) {
-        DispatchQueue.main.async {
-            self.present(self.commentNetworkErrorAlert, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            if let self = self {
+                self.present(self.commentNetworkErrorAlert, animated: true)
+            }
         }
     }
     

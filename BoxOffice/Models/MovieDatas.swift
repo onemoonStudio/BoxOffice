@@ -13,8 +13,8 @@ let changeDataOrderNotification: Notification.Name = Notification.Name("changeDa
 let updateDataNotification: Notification.Name = Notification.Name("updateData")
 let moviesDataRequestError: Notification.Name = Notification.Name("moviesDataRequestError")
 
-class SingletonData {
-    static let sharedInstance = SingletonData()
+class MovieDatas {
+    static let sharedInstance = MovieDatas()
     
     var movieDatas: [UpdatedMovieData] = []
     var nowOrderType: Int = 1
@@ -71,14 +71,15 @@ class SingletonData {
         var navigationBarTitle: String
         self.nowOrderType = orderType
         switch orderType {
+            // 당연히 요청이 적은게 더 좋다고 생각했는데 서버쪽에서 내려주는게 더 편할 수도 있겠다.
         case 1:
-            self.movieDatas.sort(by: {$0.basic.reservation_rate > $1.basic.reservation_rate})
+            movieDatas.sort(by: { $0.basic.reservation_rate > $1.basic.reservation_rate })
             navigationBarTitle = "예매율순"
         case 2:
-            self.movieDatas.sort(by: { $0.basic.user_rating > $1.basic.user_rating })
+            movieDatas.sort(by: { $0.basic.user_rating > $1.basic.user_rating })
             navigationBarTitle = "큐레이션"
         case 3:
-            self.movieDatas.sort(by: { self.dataStringToDate($0.basic.date) > self.dataStringToDate($1.basic.date) })
+            movieDatas.sort(by: { [weak self] in self!.dataStringToDate($0.basic.date) > self!.dataStringToDate($1.basic.date) })
             navigationBarTitle = "개봉일순"
         default:
             navigationBarTitle = "예매율순"

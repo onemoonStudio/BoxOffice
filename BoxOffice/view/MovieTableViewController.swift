@@ -34,15 +34,15 @@ class MovieTableViewController: UIViewController {
         sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
         let sortingByReservation = UIAlertAction(title: "예매율", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
-            SingletonData.sharedInstance.orderingData(1)
+            MovieDatas.sharedInstance.orderingData(1)
         })
         let sortingByCuration = UIAlertAction(title: "큐레이션", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
-            SingletonData.sharedInstance.orderingData(2)
+            MovieDatas.sharedInstance.orderingData(2)
         })
         let sortingByDate = UIAlertAction(title: "개봉일", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
-            SingletonData.sharedInstance.orderingData(3)
+            MovieDatas.sharedInstance.orderingData(3)
         })
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         sortingAlert.addAction(sortingByReservation)
@@ -77,7 +77,7 @@ class MovieTableViewController: UIViewController {
         }
     }
     @objc func refreshHandler(_ refreshControl: UIRefreshControl) {
-        SingletonData.sharedInstance.requestData(initRequest: false)
+        MovieDatas.sharedInstance.requestData(initRequest: false)
     }
     @objc func updateData(_ noti: Notification){
         DispatchQueue.main.async {
@@ -101,7 +101,7 @@ class MovieTableViewController: UIViewController {
 extension MovieTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MovieDatasCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as?  MovieDatasCell else { return UITableViewCell() }
-        let movieImagedata: Data = SingletonData.sharedInstance.movieDatas[indexPath.row].imageData
+        let movieImagedata: Data = MovieDatas.sharedInstance.movieDatas[indexPath.row].imageData
         
         cell.configure(indexPath.row)
         DispatchQueue.main.async {
@@ -111,7 +111,7 @@ extension MovieTableViewController: UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SingletonData.sharedInstance.movieDatas.count
+        return MovieDatas.sharedInstance.movieDatas.count
     }
     
 }

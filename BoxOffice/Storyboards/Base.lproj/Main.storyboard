@@ -621,7 +621,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="06b-eU-ytC" userLabel="StarView">
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="06b-eU-ytC" userLabel="StarView" customClass="FiveStars" customModule="BoxOffice" customModuleProvider="target">
                                                                     <rect key="frame" x="43" y="0.0" width="246" height="20"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3ui-YU-7lD" userLabel="FirstStar">
@@ -673,6 +673,13 @@
                                                                         <constraint firstItem="Z5Z-ib-GgQ" firstAttribute="leading" secondItem="FyC-dW-cnV" secondAttribute="trailing" id="oB0-oz-ydG"/>
                                                                         <constraint firstItem="rGz-Z2-uEx" firstAttribute="centerY" secondItem="06b-eU-ytC" secondAttribute="centerY" id="ruw-6A-Aje"/>
                                                                     </constraints>
+                                                                    <connections>
+                                                                        <outletCollection property="starImages" destination="3ui-YU-7lD" collectionClass="NSMutableArray" id="gT2-mr-Wob"/>
+                                                                        <outletCollection property="starImages" destination="FyC-dW-cnV" collectionClass="NSMutableArray" id="w5e-Uo-vxa"/>
+                                                                        <outletCollection property="starImages" destination="Z5Z-ib-GgQ" collectionClass="NSMutableArray" id="Dun-5i-r1u"/>
+                                                                        <outletCollection property="starImages" destination="rGz-Z2-uEx" collectionClass="NSMutableArray" id="6Fl-2T-nUZ"/>
+                                                                        <outletCollection property="starImages" destination="dzx-vF-v8x" collectionClass="NSMutableArray" id="xWk-jH-yAD"/>
+                                                                    </connections>
                                                                 </view>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -726,6 +733,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="comment" destination="K4L-ij-orW" id="7eG-Bn-lqz"/>
+                                            <outlet property="starImages" destination="06b-eU-ytC" id="I5F-Gc-Qwo"/>
                                             <outlet property="timeString" destination="jgR-t0-mqS" id="GVj-7F-08r"/>
                                             <outlet property="writer" destination="gUH-m0-rhw" id="t3C-S5-u9n"/>
                                             <outletCollection property="starImages" destination="3ui-YU-7lD" collectionClass="NSMutableArray" id="MpP-g9-sG5"/>

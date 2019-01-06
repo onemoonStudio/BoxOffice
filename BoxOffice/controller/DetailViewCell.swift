@@ -9,21 +9,26 @@
 import UIKit
 
 class FiveStars: UIView {
+    // nib으로 빼서 이미지를 연결할 필요 없이 그냥 만든다
+    // nib -> view 만 하는 스토리보드?
     @IBOutlet var starImages: [UIImageView]!
     
     func fillStarWithImage(_ inputRating: Double) {
         let preImageName: String = "ic_star_large_"
         let halfRating: Double = inputRating/2.0
+        
         for order in 0...4 {
             let rating = halfRating - Double(order)
-            if ( rating < 0.5 ){
-                self.starImages[order].image = UIImage(named: "\(preImageName)empty")
-            } else if ( 0.5 <= rating && rating < 1 ) {
-                self.starImages[order].image = UIImage(named: "\(preImageName)half")
+            if rating < 0.5 {
+                starImages[order].image = UIImage(named: "\(preImageName)empty")
+            } else if 0.5 <= rating && rating < 1 {
+                starImages[order].image = UIImage(named: "\(preImageName)half")
             } else {
-                self.starImages[order].image = UIImage(named: "\(preImageName)full")
+                starImages[order].image = UIImage(named: "\(preImageName)full")
             }
+
         }
+        
         
     }
 }
@@ -60,29 +65,32 @@ class MovieDetailInformationCell: UITableViewCell {
 
 class MovieCommentCell: UITableViewCell {
     @IBOutlet weak var writer: UILabel!
-    @IBOutlet var starImages: [UIImageView]!
+//    @IBOutlet var starImages: [UIImageView]!
+    @IBOutlet var starImages: FiveStars!
     @IBOutlet weak var timeString: UILabel!
     @IBOutlet weak var comment: UILabel!
     
-    func fillStarWithImageInt(_ inputRating: Double) {
-        let preImageName: String = "ic_star_large_"
-        for order in 0...4 {
-            let temp: Int = Int(inputRating) - order*2
-            if temp > 1 {
-                self.starImages[order].image = UIImage(named: "\(preImageName)full")
-            } else if temp == 1 {
-                self.starImages[order].image = UIImage(named: "\(preImageName)half")
-            } else {
-                self.starImages[order].image = UIImage(named: "\(preImageName)empty")
-            }
-        }
-    }
+//    func fillStarWithImageInt(_ inputRating: Double) {
+//        let preImageName: String = "ic_star_large_"
+//        for order in 0...4 {
+//            let temp: Int = Int(inputRating) - order*2
+//            if temp > 1 {
+//                self.starImages[order].image = UIImage(named: "\(preImageName)full")
+//            } else if temp == 1 {
+//                self.starImages[order].image = UIImage(named: "\(preImageName)half")
+//            } else {
+//                self.starImages[order].image = UIImage(named: "\(preImageName)empty")
+//            }
+//        }
+//    }
     
     func configure(_ data: MovieComment) {
         let commentData = data
         writer.text = commentData.writer
         timeString.text = commentData.timeString
         comment.text = commentData.contents
-        fillStarWithImageInt(commentData.rating)
+//        fillStarWithImageInt(commentData.rating)
+        starImages.fillStarWithImage(commentData.rating)
+
     }
 }
