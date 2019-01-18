@@ -20,11 +20,7 @@ class MovieTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: .moviesDataRequestError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: .didReceiveDataNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: .changeDataOrderNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: .updateDataNotification, object: nil)
+        addObserver()
         loadingIndicator.startAnimating()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
@@ -53,6 +49,13 @@ class MovieTableViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
         
+    }
+    
+    fileprivate func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: .moviesDataRequestError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: .didReceiveDataNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: .changeDataOrderNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: .updateDataNotification, object: nil)
     }
     
     @objc func mainNetworkError(_ noti: Notification) {

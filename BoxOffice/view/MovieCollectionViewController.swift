@@ -19,13 +19,9 @@ class MovieCollectionViewController: UIViewController {
     var sortingAlert: UIAlertController = UIAlertController()
     var halfWidth: CGFloat = UIScreen.main.bounds.width / 2.0
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: .moviesDataRequestError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: .changeDataOrderNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: .updateDataNotification, object: nil)
+        addObserver()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
@@ -63,6 +59,16 @@ class MovieCollectionViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
         collectionView.addSubview(refreshControl)
         
+        setCollectionViewFlowLayout()
+    }
+    
+    fileprivate func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: .moviesDataRequestError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: .changeDataOrderNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: .updateDataNotification, object: nil)
+    }
+    
+    fileprivate func setCollectionViewFlowLayout() {
         let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
         flowLayout.minimumLineSpacing = 10
