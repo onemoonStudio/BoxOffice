@@ -8,11 +8,6 @@
 
 import Foundation
 
-let didReceiveDataNotification: Notification.Name = Notification.Name("didReceiveData")
-let changeDataOrderNotification: Notification.Name = Notification.Name("changeDataOrder")
-let updateDataNotification: Notification.Name = Notification.Name("updateData")
-let moviesDataRequestError: Notification.Name = Notification.Name("moviesDataRequestError")
-
 class MovieDatas {
     static let sharedInstance = MovieDatas()
     
@@ -55,13 +50,13 @@ class MovieDatas {
                 self.orderingData(self.nowOrderType)
                 
                 if initRequest {
-                        NotificationCenter.default.post(name: didReceiveDataNotification, object: nil, userInfo: nil)
+                        NotificationCenter.default.post(name: .didReceiveDataNotification, object: nil, userInfo: nil)
                 } else {
-                        NotificationCenter.default.post(name: updateDataNotification, object: nil, userInfo: nil)
+                        NotificationCenter.default.post(name: .updateDataNotification, object: nil, userInfo: nil)
                 }
             } catch(let netErr) {
                 print(netErr.localizedDescription)
-                NotificationCenter.default.post(name: moviesDataRequestError, object: nil, userInfo: nil)
+                NotificationCenter.default.post(name: .moviesDataRequestError, object: nil, userInfo: nil)
             }
         }
         dataTask.resume()
@@ -85,7 +80,7 @@ class MovieDatas {
             navigationBarTitle = "예매율순"
         }
         
-        NotificationCenter.default.post(name: changeDataOrderNotification, object: nil, userInfo: ["navigationBarTitle" : navigationBarTitle])
+        NotificationCenter.default.post(name: .changeDataOrderNotification, object: nil, userInfo: ["navigationBarTitle" : navigationBarTitle])
     }
     
     func dataStringToDate(_ dateString: String) -> Date {

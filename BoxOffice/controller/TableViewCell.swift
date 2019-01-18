@@ -45,7 +45,7 @@ class MovieDatasCell: UITableViewCell{
         movieDate.text = movieData.openingString
         movieImage.image = nil
         movieId.text = movieData.id
-        movieImage.image = UIImage(data: SingletonData.sharedInstance.movieDatas[index].imageData)
+        movieImage.image = UIImage(data: MovieDatas.sharedInstance.movieDatas[index].imageData)
 //        DispatchQueue.main.async {
 //            [weak self] in if let self = self {
 //                    self.movieImage.image = UIImage(data: SingletonData.sharedInstance.movieDatas[index].imageData)
