@@ -101,7 +101,7 @@ class MovieTableViewController: UIViewController {
 extension MovieTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MovieDatasCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as?  MovieDatasCell else { return UITableViewCell() }
-        let movieImagedata: Data = MovieDatas.sharedInstance.movieDatas[indexPath.row].imageData
+        let movieImagedata: Data = MovieDatas.sharedInstance.movieData[indexPath.row].imageData
         
         cell.configure(indexPath.row)
         DispatchQueue.main.async {
@@ -111,7 +111,7 @@ extension MovieTableViewController: UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MovieDatas.sharedInstance.movieDatas.count
+        return MovieDatas.sharedInstance.movieData.count
     }
     
 }

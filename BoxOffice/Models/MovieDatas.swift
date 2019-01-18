@@ -11,7 +11,7 @@ import Foundation
 class MovieDatas {
     static let sharedInstance = MovieDatas()
     
-    var movieDatas: [UpdatedMovieData] = []
+    var movieData: [UpdatedMovieData] = []
     var nowOrderType: Int = 1
     
     private init() {
@@ -35,7 +35,7 @@ class MovieDatas {
             
             do {
                 // refresh controll
-                self.movieDatas.removeAll()
+                self.movieData.removeAll()
                 let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
                 let tempData: [MovieData] = apiResponse.movies
                 
@@ -44,7 +44,7 @@ class MovieDatas {
                     guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
                     
                     let tempItem: UpdatedMovieData = UpdatedMovieData(item,imageData)
-                    self.movieDatas.append(tempItem)
+                    self.movieData.append(tempItem)
                 }
                 
                 self.orderingData(self.nowOrderType)
@@ -68,13 +68,13 @@ class MovieDatas {
         switch orderType {
             // 당연히 요청이 적은게 더 좋다고 생각했는데 서버쪽에서 내려주는게 더 편할 수도 있겠다.
         case 1:
-            movieDatas.sort(by: { $0.basic.reservation_rate > $1.basic.reservation_rate })
+            movieData.sort(by: { $0.basic.reservation_rate > $1.basic.reservation_rate })
             navigationBarTitle = "예매율순"
         case 2:
-            movieDatas.sort(by: { $0.basic.user_rating > $1.basic.user_rating })
+            movieData.sort(by: { $0.basic.user_rating > $1.basic.user_rating })
             navigationBarTitle = "큐레이션"
         case 3:
-            movieDatas.sort(by: { [weak self] in self!.dataStringToDate($0.basic.date) > self!.dataStringToDate($1.basic.date) })
+            movieData.sort(by: { [weak self] in self!.dataStringToDate($0.basic.date) > self!.dataStringToDate($1.basic.date) })
             navigationBarTitle = "개봉일순"
         default:
             navigationBarTitle = "예매율순"

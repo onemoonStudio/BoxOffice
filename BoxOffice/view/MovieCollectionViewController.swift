@@ -115,13 +115,13 @@ class MovieCollectionViewController: UIViewController {
 
 extension MovieCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MovieDatas.sharedInstance.movieDatas.count
+        return MovieDatas.sharedInstance.movieData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: MovieCollectionDataCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifider, for: indexPath) as? MovieCollectionDataCell  else { return UICollectionViewCell() }
         
-        let movieImageData: Data = MovieDatas.sharedInstance.movieDatas[indexPath.item].imageData
+        let movieImageData: Data = MovieDatas.sharedInstance.movieData[indexPath.item].imageData
         
         cell.configure(indexPath.item)
         

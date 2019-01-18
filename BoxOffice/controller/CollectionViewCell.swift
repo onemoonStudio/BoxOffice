@@ -34,7 +34,7 @@ class MovieCollectionDataCell: UICollectionViewCell {
     }
     
     func configure(_ index: Int) {
-        let movieData: MovieData = MovieDatas.sharedInstance.movieDatas[index].basic
+        let movieData: MovieData = MovieDatas.sharedInstance.movieData[index].basic
         
         movieTitle.text = movieData.title
         movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
