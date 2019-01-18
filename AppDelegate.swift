@@ -27,7 +27,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        window!.rootViewController?.dismiss(animated: false, completion: nil)
+        
+        if let nowAlertController = window?.rootViewController?.presentedViewController as? UIAlertController {
+            nowAlertController.dismiss(animated: false, completion: nil)
+            print("wow ")
+        }
+        
+//        if window?.rootViewController[0] is UIAlertController {
+//            print("wow")
+//            window?.rootViewController!.dismiss(animated: false, completion: nil)
+//        }
+//        window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

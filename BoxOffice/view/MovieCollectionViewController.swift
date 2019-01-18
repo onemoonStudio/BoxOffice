@@ -98,6 +98,9 @@ class MovieCollectionViewController: UIViewController {
     
     @IBAction func showSortingAlertSheet(_ sender: UIBarButtonItem) {
         present(sortingAlert, animated: true)
+        print("hello world")
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

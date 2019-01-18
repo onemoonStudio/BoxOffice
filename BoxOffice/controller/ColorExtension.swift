@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIColor {
-    @nonobjc class var allAgeGreen: UIColor {
+    class var allAgeGreen: UIColor {
         return UIColor(red: 0x78, green: 0xB3, blue: 0x7E, alpha: 1.0)
     }
     @nonobjc class var twelveBlue: UIColor {

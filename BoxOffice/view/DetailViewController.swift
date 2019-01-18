@@ -41,12 +41,14 @@ class DetailViewController: UIViewController {
         commentNetworkErrorAlert = UIAlertController(title: "네트워크 에러", message: "한줄평을 불러올 수 없습니다.", preferredStyle: .alert)
         let commentOkAction = UIAlertAction(title: "확인", style: .default, handler: nil)
         commentNetworkErrorAlert.addAction(commentOkAction)
+        detailRequest(movieId)
+        detailCommentRequest(movieId)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        detailRequest(movieId)
-        detailCommentRequest(movieId)
+//        detailRequest(movieId)
+//        detailCommentRequest(movieId)
     }
     
     @objc func didRecieveDetailData(_ noti: Notification) {
@@ -93,8 +95,11 @@ class DetailViewController: UIViewController {
         guard let pictureFullScreenVC: PictureFullScreenViewController = mainStoryBoard.instantiateViewController(withIdentifier: "PictureFullScreen") as? PictureFullScreenViewController else { return }
         guard let prepareImage: UIImage = UIImage(data: moviePosterData) else { return }
         pictureFullScreenVC.preparedImage = prepareImage
-        show(pictureFullScreenVC, sender: nil)
+//        show(pictureFullScreenVC, sender: nil)
+        present(pictureFullScreenVC, animated: true)
+        
     }
+    
     
 }
 
