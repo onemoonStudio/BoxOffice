@@ -22,6 +22,7 @@ class MovieTableViewController: UIViewController {
         super.viewDidLoad()
         
         registerNotification()
+        registerSortingAlert()
         
         loadingIndicator.startAnimating()
         
@@ -29,6 +30,13 @@ class MovieTableViewController: UIViewController {
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         
         self.navigationItem.title = "예매율순"
+
+        refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
+    }
+    
+    func registerSortingAlert() {
         sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
         let sortingByReservation = UIAlertAction(title: "예매율", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
@@ -47,10 +55,6 @@ class MovieTableViewController: UIViewController {
         sortingAlert.addAction(sortingByCuration)
         sortingAlert.addAction(sortingByDate)
         sortingAlert.addAction(cancelAction)
-        
-        refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-        
     }
     
     func registerNotification() {

@@ -24,6 +24,8 @@ class MovieCollectionViewController: UIViewController {
         super.viewDidLoad()
         
         registerNotification()
+        registerSortingAction()
+        setUpView()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
@@ -38,7 +40,22 @@ class MovieCollectionViewController: UIViewController {
         default:
             self.navigationItem.title = "예매율순"
         }
+     
+        refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
+        collectionView.addSubview(refreshControl)
         
+    }
+    
+    func setUpView() {
+        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        flowLayout.sectionInset = UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
+        flowLayout.minimumLineSpacing = 10
+        flowLayout.minimumInteritemSpacing = 10
+        flowLayout.itemSize = CGSize(width: halfWidth - 10, height: 320)
+        self.collectionView.collectionViewLayout = flowLayout
+    }
+    
+    func registerSortingAction() {
         sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
         let sortingByReservation = UIAlertAction(title: "예매율", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
@@ -57,16 +74,6 @@ class MovieCollectionViewController: UIViewController {
         sortingAlert.addAction(sortingByCuration)
         sortingAlert.addAction(sortingByDate)
         sortingAlert.addAction(cancelAction)
-        
-        refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
-        collectionView.addSubview(refreshControl)
-        
-        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
-        flowLayout.minimumLineSpacing = 10
-        flowLayout.minimumInteritemSpacing = 10
-        flowLayout.itemSize = CGSize(width: halfWidth - 10, height: 320)
-        self.collectionView.collectionViewLayout = flowLayout
     }
     
     func registerNotification() {
