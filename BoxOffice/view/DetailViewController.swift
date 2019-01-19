@@ -25,10 +25,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didRecieveDetailData), name: .didReceiveMovieDetailData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsData), name: .didRecieveCommentData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNetworkError), name: .detailNetworkError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentNetworkError(_:)), name: .detailCommentsNetworkError, object: nil)
+        registerNotification()
+        
         loadingIndicator.startAnimating()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
@@ -49,6 +47,13 @@ class DetailViewController: UIViewController {
         super.viewWillAppear(animated)
 //        detailRequest(movieId)
 //        detailCommentRequest(movieId)
+    }
+    
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didRecieveDetailData), name: .didReceiveMovieDetailData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsData), name: .didRecieveCommentData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNetworkError), name: .detailNetworkError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentNetworkError(_:)), name: .detailCommentsNetworkError, object: nil)
     }
     
     @objc func didRecieveDetailData(_ noti: Notification) {
