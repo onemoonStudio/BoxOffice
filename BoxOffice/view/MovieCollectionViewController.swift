@@ -120,7 +120,9 @@ class MovieCollectionViewController: UIViewController {
         detailView.movieId = cell.movieId.text!
     }
     
-
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
 }
 

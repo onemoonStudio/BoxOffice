@@ -106,6 +106,9 @@ class DetailViewController: UIViewController {
         
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
 }
 

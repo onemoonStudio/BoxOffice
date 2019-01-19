@@ -104,7 +104,10 @@ class MovieTableViewController: UIViewController {
         guard let cell = sender as? MovieDatasCell else { return }
         detailView.movieId = cell.movieId.text!
     }
-
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension MovieTableViewController: UITableViewDataSource {
