@@ -13,10 +13,10 @@ class MovieTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let cellIdentifier: String = "movieTableCell"
-    let refreshControl: UIRefreshControl = UIRefreshControl()
-    var networkErrorAlert: UIAlertController = UIAlertController()
-    var sortingAlert: UIAlertController = UIAlertController()
+    private let cellIdentifier: String = "movieTableCell"
+    private let refreshControl: UIRefreshControl = UIRefreshControl()
+    private var networkErrorAlert: UIAlertController = UIAlertController()
+    private var sortingAlert: UIAlertController = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()

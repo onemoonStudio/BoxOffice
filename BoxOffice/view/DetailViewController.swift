@@ -13,14 +13,15 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailTable: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let movieDetailCellIndicator: String = "movieDetailCell"
-    let commentCellIdentifier: String = "commentCell"
+    private let movieDetailCellIndicator: String = "movieDetailCell"
+    private let commentCellIdentifier: String = "commentCell"
+    
     var movieId: String = ""
-    var movieDetailData: MovieDetail = MovieDetail()
-    var moviePosterData: Data = Data()
-    var movieComments: [MovieComment] = []
-    var networkErrorAlert: UIAlertController = UIAlertController()
-    var commentNetworkErrorAlert: UIAlertController = UIAlertController()
+    private var movieDetailData: MovieDetail = MovieDetail()
+    private var moviePosterData: Data = Data()
+    private var movieComments: [MovieComment] = []
+    private var networkErrorAlert: UIAlertController = UIAlertController()
+    private var commentNetworkErrorAlert: UIAlertController = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()

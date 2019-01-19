@@ -13,11 +13,11 @@ class MovieCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let cellIdentifider: String = "movieCollectionViewCell"
-    let refreshControl: UIRefreshControl = UIRefreshControl()
-    var networkErrorAlert: UIAlertController = UIAlertController()
-    var sortingAlert: UIAlertController = UIAlertController()
-    var halfWidth: CGFloat = UIScreen.main.bounds.width / 2.0
+    private let cellIdentifider: String = "movieCollectionViewCell"
+    private let refreshControl: UIRefreshControl = UIRefreshControl()
+    private var networkErrorAlert: UIAlertController = UIAlertController()
+    private var sortingAlert: UIAlertController = UIAlertController()
+    private var halfWidth: CGFloat = UIScreen.main.bounds.width / 2.0
     
 
     override func viewDidLoad() {
