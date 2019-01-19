@@ -16,7 +16,33 @@ class MovieCollectionDataCell: UICollectionViewCell {
     @IBOutlet weak var movieDate: UILabel!
     @IBOutlet weak var movieId: UILabel!
     
-    func setColorForAge(_ age: Int) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setUISetting()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        movieImage.image = nil
+    }
+    
+    func configure(_ index: Int) {
+        let movieData: MovieData = MovieDatas.sharedInstance.movieData[index].basic
+        movieTitle.text = movieData.title
+        movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
+         movieAge.backgroundColor = colorForAge(movieData.grade)
+        movieInfo.text = movieData.collectionViewInfoString
+        movieDate.text = movieData.date
+        movieId.text = movieData.id
+    }
+    
+    private func setUISetting() {
+        movieAge.layer.masksToBounds = true
+        movieAge.layer.cornerRadius = 15.0
+        movieAge.textColor = UIColor.white
+    }
+    
+    private func colorForAge(_ age: Int) -> UIColor {
         var ageColor: UIColor
         switch age {
         case 0:
@@ -30,22 +56,6 @@ class MovieCollectionDataCell: UICollectionViewCell {
         default:
             ageColor = UIColor.allAgeGreen
         }
-        self.movieAge.backgroundColor = ageColor
-    }
-    
-    func configure(_ index: Int) {
-        let movieData: MovieData = MovieDatas.sharedInstance.movieData[index].basic
-        
-        movieTitle.text = movieData.title
-        movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
-        setColorForAge(movieData.grade)
-        movieAge.layer.masksToBounds = true
-        movieAge.layer.cornerRadius = 15.0
-        movieAge.textColor = UIColor.white
-        movieInfo.text = movieData.collectionViewInfoString
-        movieDate.text = movieData.date
-        movieImage.image = nil
-        movieId.text = movieData.id
-        
+        return ageColor
     }
 }
