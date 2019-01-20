@@ -12,9 +12,15 @@ class PictureFullScreenViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainImageView: UIImageView!
+    
     var preparedImage: UIImage = UIImage()
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    var swipeDownGesture: UISwipeGestureRecognizer {
+        let recognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownHandler))
+        recognizer.direction = .down
+        return recognizer
     }
     
     override func viewDidLoad() {
@@ -23,6 +29,7 @@ class PictureFullScreenViewController: UIViewController {
         mainImageView.image = preparedImage
         scrollView.maximumZoomScale = 4.0
         scrollView.minimumZoomScale = 1.0
+        scrollView.addGestureRecognizer(swipeDownGesture)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -30,10 +37,13 @@ class PictureFullScreenViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    @IBAction func swipeGestureForPopViewController(_ sender: UISwipeGestureRecognizer) {
-        navigationController?.popViewController(animated: true)
+    @IBAction func dismissButtonAction(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
     
+    @objc func swipeDownHandler(_ sender: UISwipeGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension PictureFullScreenViewController: UIScrollViewDelegate {
