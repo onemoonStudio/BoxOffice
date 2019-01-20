@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC8BE22921F46B9400601263 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8BE22821F46B9400601263 /* Extension+UIViewController.swift */; };
 		D95DE22321B8CC2100551542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DE22221B8CC2100551542 /* AppDelegate.swift */; };
 		D95DE22521B8CC2100551542 /* MovieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DE22421B8CC2100551542 /* MovieTableViewController.swift */; };
 		D95DE22821B8CC2100551542 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D95DE22621B8CC2100551542 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC8BE22821F46B9400601263 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
 		D95DE21F21B8CC2100551542 /* BoxOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D95DE22221B8CC2100551542 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D95DE22421B8CC2100551542 /* MovieTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				D99CBF1721C622D2007B80E5 /* Views */,
 				D9DD718221B8DF6D00061069 /* Controllers */,
 				D99CBF1F21C627D7007B80E5 /* SupportFiles */,
+				BC8BE22821F46B9400601263 /* Extension+UIViewController.swift */,
 			);
 			path = BoxOffice;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				D9629A4921C2044700F2CD04 /* PictureFullScreenViewController.swift in Sources */,
 				D99CBF1921C6231B007B80E5 /* TableViewCell.swift in Sources */,
 				D9DD718721B8E48700061069 /* DataModel.swift in Sources */,
+				BC8BE22921F46B9400601263 /* Extension+UIViewController.swift in Sources */,
 				D990F9DC21E089650082F8F8 /* Extensions.swift in Sources */,
 				D9711A5121BCA2350031175B /* MovieDatas.swift in Sources */,
 				D9711A5321BCDED70031175B /* DetailViewController.swift in Sources */,
@@ -369,7 +373,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74HR8KDU73;
+				DEVELOPMENT_TEAM = 86PPC52X64;
 				INFOPLIST_FILE = "$(SRCROOT)/BoxOffice/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -388,7 +392,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 74HR8KDU73;
+				DEVELOPMENT_TEAM = 86PPC52X64;
 				INFOPLIST_FILE = "$(SRCROOT)/BoxOffice/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

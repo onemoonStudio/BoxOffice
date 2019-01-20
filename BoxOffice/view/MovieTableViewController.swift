@@ -16,35 +16,15 @@ class MovieTableViewController: UIViewController {
     let cellIdentifier: String = "movieTableCell"
     let refreshControl: UIRefreshControl = UIRefreshControl()
     var networkErrorAlert: UIAlertController = UIAlertController()
-    var sortingAlert: UIAlertController = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "예매율순"
         addObserver()
         loadingIndicator.startAnimating()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        
-        self.navigationItem.title = "예매율순"
-        sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
-        let sortingByReservation = UIAlertAction(title: "예매율", style: .default, handler: { _ in
-            self.loadingIndicator.startAnimating()
-            Manager.sharedInstance.orderingData(1)
-        })
-        let sortingByCuration = UIAlertAction(title: "큐레이션", style: .default, handler: { _ in
-            self.loadingIndicator.startAnimating()
-            Manager.sharedInstance.orderingData(2)
-        })
-        let sortingByDate = UIAlertAction(title: "개봉일", style: .default, handler: { _ in
-            self.loadingIndicator.startAnimating()
-            Manager.sharedInstance.orderingData(3)
-        })
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        sortingAlert.addAction(sortingByReservation)
-        sortingAlert.addAction(sortingByCuration)
-        sortingAlert.addAction(sortingByDate)
-        sortingAlert.addAction(cancelAction)
         
         refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
@@ -90,7 +70,11 @@ class MovieTableViewController: UIViewController {
     }
     
     @IBAction func showSortingAlertSheet(_ sender: UIBarButtonItem) {
-        present(sortingAlert, animated: true)
+        presentActionSheet { [weak self] (orderType) in
+            guard let self = self else { return }
+            self.loadingIndicator.startAnimating()
+            Manager.sharedInstance.orderingData(orderType)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

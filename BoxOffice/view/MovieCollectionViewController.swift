@@ -22,39 +22,8 @@ class MovieCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addObserver()
-        
-        networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
-        networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        
-        switch Manager.sharedInstance.nowOrderType {
-        case 1:
-            self.navigationItem.title = "예매율순"
-        case 2:
-            self.navigationItem.title = "큐레이션"
-        case 3:
-            self.navigationItem.title = "개봉일순"
-        default:
-            self.navigationItem.title = "예매율순"
-        }
-        
-        sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
-        let sortingByReservation = UIAlertAction(title: "예매율", style: .default, handler: { _ in
-            self.loadingIndicator.startAnimating()
-            Manager.sharedInstance.orderingData(1)
-        })
-        let sortingByCuration = UIAlertAction(title: "큐레이션", style: .default, handler: { _ in
-            self.loadingIndicator.startAnimating()
-            Manager.sharedInstance.orderingData(2)
-        })
-        let sortingByDate = UIAlertAction(title: "개봉일", style: .default, handler: { _ in
-            self.loadingIndicator.startAnimating()
-            Manager.sharedInstance.orderingData(3)
-        })
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        sortingAlert.addAction(sortingByReservation)
-        sortingAlert.addAction(sortingByCuration)
-        sortingAlert.addAction(sortingByDate)
-        sortingAlert.addAction(cancelAction)
+        setNetworkErrorAlert()
+        setNavigationBarTitle()
         
         refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
         collectionView.addSubview(refreshControl)
@@ -75,6 +44,24 @@ class MovieCollectionViewController: UIViewController {
         flowLayout.minimumInteritemSpacing = 10
         flowLayout.itemSize = CGSize(width: halfWidth - 10, height: 320)
         self.collectionView.collectionViewLayout = flowLayout
+    }
+    
+    fileprivate func setNetworkErrorAlert() {
+        networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
+        networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+    }
+    
+    fileprivate func setNavigationBarTitle() {
+        switch Manager.sharedInstance.nowOrderType {
+        case 1:
+            self.navigationItem.title = "예매율순"
+        case 2:
+            self.navigationItem.title = "큐레이션"
+        case 3:
+            self.navigationItem.title = "개봉일순"
+        default:
+            self.navigationItem.title = "예매율순"
+        }
     }
     
     @objc func mainNetworkError(_ noti: Notification) {
@@ -103,10 +90,11 @@ class MovieCollectionViewController: UIViewController {
     }
     
     @IBAction func showSortingAlertSheet(_ sender: UIBarButtonItem) {
-        present(sortingAlert, animated: true)
-        print("hello world")
-        
-        
+        presentActionSheet { [weak self] (orderType) in
+            guard let self = self else { return }
+            self.loadingIndicator.startAnimating()
+            Manager.sharedInstance.orderingData(orderType)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
