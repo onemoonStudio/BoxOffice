@@ -19,36 +19,30 @@ class DetailViewController: UIViewController {
     var movieDetailData: MovieDetail = MovieDetail()
     var moviePosterData: Data = Data()
     var movieComments: [MovieComment] = []
-    var networkErrorAlert: UIAlertController = UIAlertController()
-    var commentNetworkErrorAlert: UIAlertController = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        addObserver()
+        loadingIndicator.startAnimating()
+        detailRequest(movieId)
+        detailCommentRequest(movieId)
+    }
+    
+    fileprivate func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(didRecieveDetailData), name: .didReceiveMovieDetailData, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsData), name: .didRecieveCommentData, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNetworkError), name: .detailNetworkError, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentNetworkError(_:)), name: .detailCommentsNetworkError, object: nil)
-        loadingIndicator.startAnimating()
-        
-        networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
+    }
+    
+    fileprivate func networkAlert(_ title: String, _ message: String) -> UIAlertController {
+        let networkErrorAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default, handler: { _ in
             self.loadingIndicator.stopAnimating()
             self.networkErrorCallback()
         })
         networkErrorAlert.addAction(okAction)
-        
-        commentNetworkErrorAlert = UIAlertController(title: "네트워크 에러", message: "한줄평을 불러올 수 없습니다.", preferredStyle: .alert)
-        let commentOkAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-        commentNetworkErrorAlert.addAction(commentOkAction)
-        detailRequest(movieId)
-        detailCommentRequest(movieId)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        detailRequest(movieId)
-//        detailCommentRequest(movieId)
+        return networkErrorAlert
     }
     
     @objc func didRecieveDetailData(_ noti: Notification) {
@@ -72,22 +66,22 @@ class DetailViewController: UIViewController {
     }
     
     @objc func didReceiveNetworkError(_ noti: Notification) {
+        let errorAlert = self.networkAlert("네트워크 에러", "네트워크를 확인하신 뒤 다시 시도해주세요")
         DispatchQueue.main.async {
-            self.present(self.networkErrorAlert, animated: true)
+            self.present(errorAlert, animated: true, completion: nil)
         }
     }
     
     @objc func didReceiveCommentNetworkError(_ noti: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            if let self = self {
-                self.present(self.commentNetworkErrorAlert, animated: true)
-            }
+        let errorAlert = self.networkAlert("네트워크 에러", "한줄평을 불러올 수 없습니다.")
+        DispatchQueue.main.async {
+            self.present(errorAlert, animated: true, completion: nil)
         }
     }
     
     func networkErrorCallback() {
-        self.networkErrorAlert.dismiss(animated: true, completion: nil)
-        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func imageFullScreen(_ sender: UITapGestureRecognizer) {
