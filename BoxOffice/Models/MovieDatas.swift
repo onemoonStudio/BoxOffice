@@ -8,8 +8,8 @@
 
 import Foundation
 
-class MovieDatas {
-    static let sharedInstance = MovieDatas()
+class Manager {
+    static let sharedInstance = Manager()
     
     var movieData: [UpdatedMovieData] = []
     var nowOrderType: Int = 1

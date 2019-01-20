@@ -26,10 +26,7 @@ class FiveStars: UIView {
             } else {
                 starImages[order].image = UIImage(named: "\(preImageName)full")
             }
-
         }
-        
-        
     }
 }
 

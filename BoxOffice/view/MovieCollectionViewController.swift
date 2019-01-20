@@ -26,7 +26,7 @@ class MovieCollectionViewController: UIViewController {
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         
-        switch MovieDatas.sharedInstance.nowOrderType {
+        switch Manager.sharedInstance.nowOrderType {
         case 1:
             self.navigationItem.title = "예매율순"
         case 2:
@@ -40,15 +40,15 @@ class MovieCollectionViewController: UIViewController {
         sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
         let sortingByReservation = UIAlertAction(title: "예매율", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
-            MovieDatas.sharedInstance.orderingData(1)
+            Manager.sharedInstance.orderingData(1)
         })
         let sortingByCuration = UIAlertAction(title: "큐레이션", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
-            MovieDatas.sharedInstance.orderingData(2)
+            Manager.sharedInstance.orderingData(2)
         })
         let sortingByDate = UIAlertAction(title: "개봉일", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
-            MovieDatas.sharedInstance.orderingData(3)
+            Manager.sharedInstance.orderingData(3)
         })
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         sortingAlert.addAction(sortingByReservation)
@@ -93,7 +93,7 @@ class MovieCollectionViewController: UIViewController {
         }
     }
     @objc func refreshHandler(_ refreshControl: UIRefreshControl) {
-        MovieDatas.sharedInstance.requestData(initRequest: false)
+        Manager.sharedInstance.requestData(initRequest: false)
     }
     @objc func updateData(_ noti: Notification){
         DispatchQueue.main.async {
@@ -121,13 +121,13 @@ class MovieCollectionViewController: UIViewController {
 
 extension MovieCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MovieDatas.sharedInstance.movieData.count
+        return Manager.sharedInstance.movieData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: MovieCollectionDataCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifider, for: indexPath) as? MovieCollectionDataCell  else { return UICollectionViewCell() }
         
-        let movieImageData: Data = MovieDatas.sharedInstance.movieData[indexPath.item].imageData
+        let movieImageData: Data = Manager.sharedInstance.movieData[indexPath.item].imageData
         
         cell.configure(indexPath.item)
         

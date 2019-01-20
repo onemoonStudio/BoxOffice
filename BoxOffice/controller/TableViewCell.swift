@@ -27,14 +27,14 @@ class MovieDatasCell: UITableViewCell{
     }
     
     func configure(_ index: Int) {
-        let movieData: MovieData = MovieDatas.sharedInstance.movieData[index].basic
+        let movieData: MovieData = Manager.sharedInstance.movieData[index].basic
         movieTitle.text = movieData.title
         movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
         movieAge.backgroundColor = colorForAge(movieData.grade)
         movieInfo.text = movieData.infoString
         movieDate.text = movieData.openingString
         movieId.text = movieData.id
-        movieImage.image = UIImage(data: MovieDatas.sharedInstance.movieData[index].imageData)
+        movieImage.image = UIImage(data: Manager.sharedInstance.movieData[index].imageData)
     }
     
     private func setUISetting() {
