@@ -13,18 +13,18 @@ class MovieCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let cellIdentifider: String = "movieCollectionViewCell"
-    let refreshControl: UIRefreshControl = UIRefreshControl()
-    var networkErrorAlert: UIAlertController = UIAlertController()
-    var sortingAlert: UIAlertController = UIAlertController()
-    var halfWidth: CGFloat = UIScreen.main.bounds.width / 2.0
+    private let cellIdentifider: String = "movieCollectionViewCell"
+    private let refreshControl: UIRefreshControl = UIRefreshControl()
+    private var networkErrorAlert: UIAlertController = UIAlertController()
+    private var sortingAlert: UIAlertController = UIAlertController()
+    private var halfWidth: CGFloat = UIScreen.main.bounds.width / 2.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addObserver()
         setNetworkErrorAlert()
         setNavigationBarTitle()
-        
+
         refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
         collectionView.addSubview(refreshControl)
         
@@ -62,6 +62,7 @@ class MovieCollectionViewController: UIViewController {
         default:
             self.navigationItem.title = "예매율순"
         }
+
     }
     
     @objc func mainNetworkError(_ noti: Notification) {
@@ -103,7 +104,9 @@ class MovieCollectionViewController: UIViewController {
         detailView.movieId = cell.movieId.text!
     }
     
-
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
 }
 

@@ -13,8 +13,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailTable: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let movieDetailCellIndicator: String = "movieDetailCell"
-    let commentCellIdentifier: String = "commentCell"
+    private let movieDetailCellIndicator: String = "movieDetailCell"
+    private let commentCellIdentifier: String = "commentCell"
+    
     var movieId: String = ""
     var movieDetailData: MovieDetail = MovieDetail()
     var moviePosterData: Data = Data()
@@ -43,6 +44,13 @@ class DetailViewController: UIViewController {
         })
         networkErrorAlert.addAction(okAction)
         return networkErrorAlert
+    }
+    
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didRecieveDetailData), name: .didReceiveMovieDetailData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsData), name: .didRecieveCommentData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNetworkError), name: .detailNetworkError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentNetworkError(_:)), name: .detailCommentsNetworkError, object: nil)
     }
     
     @objc func didRecieveDetailData(_ noti: Notification) {
@@ -94,6 +102,9 @@ class DetailViewController: UIViewController {
         
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
 }
 

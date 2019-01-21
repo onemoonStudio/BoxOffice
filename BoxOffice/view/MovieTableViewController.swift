@@ -12,7 +12,6 @@ class MovieTableViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    
     let cellIdentifier: String = "movieTableCell"
     let refreshControl: UIRefreshControl = UIRefreshControl()
     var networkErrorAlert: UIAlertController = UIAlertController()
@@ -20,15 +19,15 @@ class MovieTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "예매율순"
-        addObserver()
+        addObserver()    
+
         loadingIndicator.startAnimating()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        
         refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-        
+        tableView.addSubview(refreshControl)        
+
     }
     
     fileprivate func addObserver() {
@@ -82,7 +81,10 @@ class MovieTableViewController: UIViewController {
         guard let cell = sender as? MovieDatasCell else { return }
         detailView.movieId = cell.movieId.text!
     }
-
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension MovieTableViewController: UITableViewDataSource {

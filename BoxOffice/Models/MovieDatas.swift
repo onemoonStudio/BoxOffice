@@ -10,8 +10,8 @@ import Foundation
 
 class Manager {
     static let sharedInstance = Manager()
-    
-    var movieData: [UpdatedMovieData] = []
+    var movieDatas: [UpdatedMovieData] = []
+    var tempDatas: [UpdatedMovieData] = []    
     var nowOrderType: Int = 1
     
     private init() {
@@ -35,7 +35,7 @@ class Manager {
             
             do {
                 // refresh controll
-                self.movieData.removeAll()
+                self.tempDatas.removeAll()
                 let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
                 let tempData: [MovieData] = apiResponse.movies
                 
@@ -44,9 +44,9 @@ class Manager {
                     guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
                     
                     let tempItem: UpdatedMovieData = UpdatedMovieData(item,imageData)
-                    self.movieData.append(tempItem)
+                    self.tempDatas.append(tempItem)
                 }
-                
+                self.movieDatas = self.tempDatas
                 self.orderingData(self.nowOrderType)
                 
                 if initRequest {
