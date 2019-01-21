@@ -13,22 +13,21 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailTable: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let movieDetailCellIndicator: String = "movieDetailCell"
-    let commentCellIdentifier: String = "commentCell"
+    private let movieDetailCellIndicator: String = "movieDetailCell"
+    private let commentCellIdentifier: String = "commentCell"
+    
     var movieId: String = ""
-    var movieDetailData: MovieDetail = MovieDetail()
-    var moviePosterData: Data = Data()
-    var movieComments: [MovieComment] = []
-    var networkErrorAlert: UIAlertController = UIAlertController()
-    var commentNetworkErrorAlert: UIAlertController = UIAlertController()
+    private var movieDetailData: MovieDetail = MovieDetail()
+    private var moviePosterData: Data = Data()
+    private var movieComments: [MovieComment] = []
+    private var networkErrorAlert: UIAlertController = UIAlertController()
+    private var commentNetworkErrorAlert: UIAlertController = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didRecieveDetailData), name: .didReceiveMovieDetailData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsData), name: .didRecieveCommentData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNetworkError), name: .detailNetworkError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentNetworkError(_:)), name: .detailCommentsNetworkError, object: nil)
+        registerNotification()
+        
         loadingIndicator.startAnimating()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
@@ -49,6 +48,13 @@ class DetailViewController: UIViewController {
         super.viewWillAppear(animated)
 //        detailRequest(movieId)
 //        detailCommentRequest(movieId)
+    }
+    
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didRecieveDetailData), name: .didReceiveMovieDetailData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsData), name: .didRecieveCommentData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNetworkError), name: .detailNetworkError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveCommentNetworkError(_:)), name: .detailCommentsNetworkError, object: nil)
     }
     
     @objc func didRecieveDetailData(_ noti: Notification) {
@@ -100,6 +106,9 @@ class DetailViewController: UIViewController {
         
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
 }
 

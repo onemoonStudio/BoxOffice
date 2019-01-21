@@ -17,6 +17,7 @@ class MovieDatas {
     static let sharedInstance = MovieDatas()
     
     var movieDatas: [UpdatedMovieData] = []
+    var tempDatas: [UpdatedMovieData] = []
     var nowOrderType: Int = 1
     
     private init() {
@@ -40,7 +41,7 @@ class MovieDatas {
             
             do {
                 // refresh controll
-                self.movieDatas.removeAll()
+                self.tempDatas.removeAll()
                 let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
                 let tempData: [MovieData] = apiResponse.movies
                 
@@ -49,9 +50,9 @@ class MovieDatas {
                     guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
                     
                     let tempItem: UpdatedMovieData = UpdatedMovieData(item,imageData)
-                    self.movieDatas.append(tempItem)
+                    self.tempDatas.append(tempItem)
                 }
-                
+                self.movieDatas = self.tempDatas
                 self.orderingData(self.nowOrderType)
                 
                 if initRequest {

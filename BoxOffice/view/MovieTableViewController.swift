@@ -13,24 +13,30 @@ class MovieTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let cellIdentifier: String = "movieTableCell"
-    let refreshControl: UIRefreshControl = UIRefreshControl()
-    var networkErrorAlert: UIAlertController = UIAlertController()
-    var sortingAlert: UIAlertController = UIAlertController()
+    private let cellIdentifier: String = "movieTableCell"
+    private let refreshControl: UIRefreshControl = UIRefreshControl()
+    private var networkErrorAlert: UIAlertController = UIAlertController()
+    private var sortingAlert: UIAlertController = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: moviesDataRequestError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: updateDataNotification, object: nil)
+        registerNotification()
+        registerSortingAlert()
+        
         loadingIndicator.startAnimating()
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         
         self.navigationItem.title = "예매율순"
+
+        refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
+    }
+    
+    func registerSortingAlert() {
         sortingAlert = UIAlertController(title: "정렬방식", message: "영화를 어떤 방식으로 정렬할까요?", preferredStyle: .actionSheet)
         let sortingByReservation = UIAlertAction(title: "예매율", style: .default, handler: { _ in
             self.loadingIndicator.startAnimating()
@@ -49,10 +55,13 @@ class MovieTableViewController: UIViewController {
         sortingAlert.addAction(sortingByCuration)
         sortingAlert.addAction(sortingByDate)
         sortingAlert.addAction(cancelAction)
-        
-        refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-        
+    }
+    
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: moviesDataRequestError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: updateDataNotification, object: nil)
     }
     
     @objc func mainNetworkError(_ noti: Notification) {
@@ -95,7 +104,10 @@ class MovieTableViewController: UIViewController {
         guard let cell = sender as? MovieDatasCell else { return }
         detailView.movieId = cell.movieId.text!
     }
-
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension MovieTableViewController: UITableViewDataSource {
