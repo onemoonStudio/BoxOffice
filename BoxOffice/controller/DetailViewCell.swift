@@ -13,9 +13,9 @@ class FiveStars: UIView {
     // nib -> view 만 하는 스토리보드?
     @IBOutlet var starImages: [UIImageView]!
     
-    func fillStarWithImage(_ inputRating: Double) {
+    func fillStar(by Rating: Double) {
         let preImageName: String = "ic_star_large_"
-        let halfRating: Double = inputRating/2.0
+        let halfRating: Double = Rating/2.0
         
         for order in 0...4 {
             let rating = halfRating - Double(order)
@@ -90,7 +90,7 @@ class MovieCommentCell: UITableViewCell {
         timeString.text = commentData.time
         comment.text = commentData.contents
 //        fillStarWithImageInt(commentData.rating)
-        starImages.fillStarWithImage(commentData.rating)
+        starImages.fillStar(by: commentData.rating)
 
     }
 }

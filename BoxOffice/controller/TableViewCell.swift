@@ -16,7 +16,7 @@ class MovieDatasCell: UITableViewCell{
     @IBOutlet weak var movieDate: UILabel!
     @IBOutlet weak var movieId: UILabel!
     
-    func setColorForAge(_ age: Int) {
+    func setColor(forAge age: Int) {
         var ageColor: UIColor
         switch age {
         case 0:
@@ -37,7 +37,7 @@ class MovieDatasCell: UITableViewCell{
         let movieData: MovieData = MovieDatas.sharedInstance.movieDatas[index].basic
         movieTitle.text = movieData.title
         movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
-        setColorForAge(movieData.grade)
+        setColor(forAge: movieData.grade)
         movieAge.layer.masksToBounds = true
         movieAge.layer.cornerRadius = 15.0
         movieAge.textColor = UIColor.white

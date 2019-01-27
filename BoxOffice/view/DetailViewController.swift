@@ -137,7 +137,7 @@ extension DetailViewController: UITableViewDataSource {
             
             movieDetailCell.configure(self.movieDetailData , imageData: self.moviePosterData)
             guard let mainStars = movieDetailCell.mainStarsView as? FiveStars else { return UITableViewCell() }
-            mainStars.fillStarWithImage(movieDetailData.user_rating)
+            mainStars.fillStar(by: movieDetailData.user_rating)
             
             let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageFullScreen(_:)))
             imageTapGesture.numberOfTapsRequired = 1
