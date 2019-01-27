@@ -52,11 +52,11 @@ class MovieDetailInformationCell: UITableViewCell {
         mainPosterImageView.image = UIImage(data: imageData)
         mainTitleLabel.text = movieDetailData.title
         mainGradeImage.image = UIImage(named: "ic_\(movieDetailData.grade)")
-        mainDateLabel.text = movieDetailData.openingString
-        mainGenreLabel.text = movieDetailData.genreAndRunningTimeString
-        leftInfoReservationRateLabel.text = movieDetailData.reservationString
+        mainDateLabel.text = movieDetailData.opening
+        mainGenreLabel.text = movieDetailData.genreAndRunningTime
+        leftInfoReservationRateLabel.text = movieDetailData.reservation
         midInfoUserRatingLabel.text = String(movieDetailData.user_rating)
-        rightInfoAudienceLabel.text = movieDetailData.audienceString
+        rightInfoAudienceLabel.text = movieDetailData.audienceInfo
         synopsisLabel.text = movieDetailData.synopsis
         directorLabel.text = movieDetailData.director
         actorsLabel.text = movieDetailData.actor
@@ -87,7 +87,7 @@ class MovieCommentCell: UITableViewCell {
     func configure(_ data: MovieComment) {
         let commentData = data
         writer.text = commentData.writer
-        timeString.text = commentData.timeString
+        timeString.text = commentData.time
         comment.text = commentData.contents
 //        fillStarWithImageInt(commentData.rating)
         starImages.fillStarWithImage(commentData.rating)

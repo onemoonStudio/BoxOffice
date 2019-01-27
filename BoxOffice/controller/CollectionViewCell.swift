@@ -42,7 +42,7 @@ class MovieCollectionDataCell: UICollectionViewCell {
         movieAge.layer.masksToBounds = true
         movieAge.layer.cornerRadius = 15.0
         movieAge.textColor = UIColor.white
-        movieInfo.text = movieData.collectionViewInfoString
+        movieInfo.text = movieData.collectionViewInfo
         movieDate.text = movieData.date
         movieImage.image = nil
         movieId.text = movieData.id

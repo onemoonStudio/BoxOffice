@@ -41,8 +41,8 @@ class MovieDatasCell: UITableViewCell{
         movieAge.layer.masksToBounds = true
         movieAge.layer.cornerRadius = 15.0
         movieAge.textColor = UIColor.white
-        movieInfo.text = movieData.infoString
-        movieDate.text = movieData.openingString
+        movieInfo.text = movieData.info
+        movieDate.text = movieData.opening
         movieImage.image = nil
         movieId.text = movieData.id
 

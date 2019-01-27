@@ -22,13 +22,13 @@ struct UpdatedMovieData {
         self.imageData = imageData
     }
     
-    var infoString: String {
+    var info: String {
         return "평점 : \(self.basic.user_rating) 예매순위 : \(self.basic.reservation_grade) 예매율 : \(self.basic.reservation_rate)"
     }
-    var collectionViewInfoString: String {
+    var collectionViewInfo: String {
         return "\(self.basic.reservation_grade)위(\(self.basic.user_rating)) / \(self.basic.reservation_rate)%"
     }
-    var openingString: String {
+    var opening: String {
         return "개봉일 : \(self.basic.date)"
     }
 }
@@ -43,13 +43,13 @@ struct MovieData: Codable {
     let date: String
     let id: String
     
-    var infoString: String {
+    var info: String {
         return "평점 : \(self.user_rating) 예매순위 : \(self.reservation_grade) 예매율 : \(self.reservation_rate)"
     }
-    var collectionViewInfoString: String {
+    var collectionViewInfo: String {
         return "\(self.reservation_grade)위(\(user_rating)) / \(self.reservation_rate)%"
     }
-    var openingString: String {
+    var opening: String {
         return "개봉일 : \(self.date)"
     }
 }
@@ -87,16 +87,16 @@ struct MovieDetail: Codable, Hashable {
         id = ""
     }
     
-    var openingString: String {
+    var opening: String {
         return "\(self.date)개봉"
     }
-    var genreAndRunningTimeString: String {
+    var genreAndRunningTime: String {
         return "\(self.genre)/\(self.duration)분"
     }
-    var reservationString: String {
+    var reservation: String {
         return "\(self.reservation_grade)위/\(self.reservation_rate)%"
     }
-    var audienceString: String {
+    var audienceInfo: String {
         var result: String = ""
         var audienceNumber: Int = self.audience
         while true {
@@ -129,7 +129,7 @@ struct MovieComment: Codable, Hashable {
     let movie_id: String
     let contents: String
     
-    var timeString: String {
+    var time: String {
         let date: Date = Date(timeIntervalSince1970: self.timestamp)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
