@@ -70,23 +70,6 @@ struct MovieDetail: Codable, Hashable {
     let date: String
     let id: String
     
-    init() {
-        audience = 0
-        grade = 0
-        actor = ""
-        duration = 0
-        director = ""
-        synopsis = ""
-        genre = ""
-        image = ""
-        reservation_grade = 0
-        title = ""
-        reservation_rate = 0
-        user_rating = 0
-        date = ""
-        id = ""
-    }
-    
     var openingString: String {
         return "\(self.date)개봉"
     }

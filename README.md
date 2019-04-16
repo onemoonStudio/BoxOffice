@@ -103,7 +103,12 @@ movie datas & movie Detail에 대한 요청을 비동기 방식으로 처리하�
 
 
 
+## Refactoring
 
+- TODO
+  - notification -> escaping closure
+  - using nib & storyboard 
+  - caching
 
 
 

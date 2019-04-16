@@ -16,7 +16,7 @@ class DetailViewController: UIViewController {
     let movieDetailCellIndicator: String = "movieDetailCell"
     let commentCellIdentifier: String = "commentCell"
     var movieId: String = ""
-    var movieDetailData: MovieDetail = MovieDetail()
+    var movieDetailData: MovieDetail?
     var moviePosterData: Data = Data()
     var movieComments: [MovieComment] = []
     var networkErrorAlert: UIAlertController = UIAlertController()
@@ -124,9 +124,10 @@ extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             // detail Information
-            guard let movieDetailCell: MovieDetailInformationCell = tableView.dequeueReusableCell(withIdentifier: movieDetailCellIndicator, for: indexPath) as? MovieDetailInformationCell else { return UITableViewCell() }            
+            guard let movieDetailCell: MovieDetailInformationCell = tableView.dequeueReusableCell(withIdentifier: movieDetailCellIndicator, for: indexPath) as? MovieDetailInformationCell,
+            let movieDetailData = movieDetailData else { return UITableViewCell() }
             
-            movieDetailCell.configure(self.movieDetailData , imageData: self.moviePosterData)
+            movieDetailCell.configure(movieDetailData , imageData: self.moviePosterData)
             guard let mainStars = movieDetailCell.mainStarsView as? FiveStars else { return UITableViewCell() }
             mainStars.fillStarWithImage(movieDetailData.user_rating)
             
