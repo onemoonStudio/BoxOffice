@@ -19,9 +19,31 @@ class MovieDatas {
     var movieDatas: [UpdatedMovieData] = []
     var nowOrderType: Int = 1
     
+//    let apicenter: APIClient =  APIClient()
+    
+    
+    
+//
+//    func test() {
+//        let temp = boxOfficeRequest.init("http://connect-boxoffice.run.goorm.io", path: "/movies?order_type=0")
+//        do {
+//            let urlRequest = try apicenter.buildURLRequest(for: temp)
+//            let defaultSession = URLSession(configuration: .default)
+//            let dataTasek = defaultSession.dataTask(with: urlRequest) { (data, urlres, err) in
+//
+//            }
+//        } catch {
+//            print(error)
+//        }
+//
+//
+//    }
+//
+    
+    
+    
     private init() {
-//        self.movieDatas = []
-        self.requestData(initRequest: true)
+        requestData(initRequest: true)
     }
     
     func requestData(initRequest: Bool) {
