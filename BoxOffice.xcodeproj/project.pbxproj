@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D905A0E8226B0325006046BD /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D905A0E7226B0325006046BD /* NetworkError.swift */; };
+		D905A0EA226B033C006046BD /* RequestBuilderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D905A0E9226B033C006046BD /* RequestBuilderError.swift */; };
 		D95DE22321B8CC2100551542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DE22221B8CC2100551542 /* AppDelegate.swift */; };
 		D95DE22521B8CC2100551542 /* MovieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DE22421B8CC2100551542 /* MovieTableViewController.swift */; };
 		D95DE22821B8CC2100551542 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D95DE22621B8CC2100551542 /* Main.storyboard */; };
@@ -16,7 +18,10 @@
 		D9711A5321BCDED70031175B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9711A5221BCDED70031175B /* DetailViewController.swift */; };
 		D98D00602266EAF3003FE90D /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D005F2266EAF3003FE90D /* APIRequest.swift */; };
 		D98D00622266ED48003FE90D /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D00612266ED48003FE90D /* URLRequestBuilder.swift */; };
-		D98D00642266EE9F003FE90D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D00632266EE9F003FE90D /* APIClient.swift */; };
+		D98D00642266EE9F003FE90D /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D00632266EE9F003FE90D /* NetworkHandler.swift */; };
+		D98D006A22697DE0003FE90D /* ResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D006922697DE0003FE90D /* ResponseStatus.swift */; };
+		D98D006D226983C4003FE90D /* Enum+BoxOfficeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D006C226983C4003FE90D /* Enum+BoxOfficeAPI.swift */; };
+		D98D006F226983E5003FE90D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D006E226983E5003FE90D /* APIManager.swift */; };
 		D990F9DC21E089650082F8F8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D990F9DB21E089650082F8F8 /* Extensions.swift */; };
 		D99CBF1621C5FD35007B80E5 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99CBF1521C5FD35007B80E5 /* ColorExtension.swift */; };
 		D99CBF1921C6231B007B80E5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99CBF1821C6231B007B80E5 /* TableViewCell.swift */; };
@@ -29,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D905A0E7226B0325006046BD /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		D905A0E9226B033C006046BD /* RequestBuilderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilderError.swift; sourceTree = "<group>"; };
 		D95DE21F21B8CC2100551542 /* BoxOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D95DE22221B8CC2100551542 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D95DE22421B8CC2100551542 /* MovieTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +47,10 @@
 		D9711A5221BCDED70031175B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D98D005F2266EAF3003FE90D /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		D98D00612266ED48003FE90D /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
-		D98D00632266EE9F003FE90D /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		D98D00632266EE9F003FE90D /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
+		D98D006922697DE0003FE90D /* ResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseStatus.swift; sourceTree = "<group>"; };
+		D98D006C226983C4003FE90D /* Enum+BoxOfficeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Enum+BoxOfficeAPI.swift"; sourceTree = "<group>"; };
+		D98D006E226983E5003FE90D /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		D990F9DB21E089650082F8F8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D99CBF1521C5FD35007B80E5 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		D99CBF1821C6231B007B80E5 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
@@ -63,6 +73,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D905A0E6226B031C006046BD /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				D905A0E7226B0325006046BD /* NetworkError.swift */,
+				D905A0E9226B033C006046BD /* RequestBuilderError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		D95DE21621B8CC2000551542 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +115,7 @@
 		D9711A4F21BCA18F0031175B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D98D006B22698398003FE90D /* BoxOfficeAPI */,
 				D9DD718621B8E48700061069 /* DataModel.swift */,
 				D9711A5021BCA2350031175B /* MovieDatas.swift */,
 				D9AF0F3A21BE56AC0021878E /* MovieDetailRequest.swift */,
@@ -107,11 +127,22 @@
 		D98D005E2266EA68003FE90D /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				D905A0E6226B031C006046BD /* Error */,
 				D98D005F2266EAF3003FE90D /* APIRequest.swift */,
 				D98D00612266ED48003FE90D /* URLRequestBuilder.swift */,
-				D98D00632266EE9F003FE90D /* APIClient.swift */,
+				D98D00632266EE9F003FE90D /* NetworkHandler.swift */,
+				D98D006922697DE0003FE90D /* ResponseStatus.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		D98D006B22698398003FE90D /* BoxOfficeAPI */ = {
+			isa = PBXGroup;
+			children = (
+				D98D006C226983C4003FE90D /* Enum+BoxOfficeAPI.swift */,
+				D98D006E226983E5003FE90D /* APIManager.swift */,
+			);
+			path = BoxOfficeAPI;
 			sourceTree = "<group>";
 		};
 		D99CBF1721C622D2007B80E5 /* Views */ = {
@@ -228,11 +259,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9DD718421B8DFA600061069 /* MovieCollectionViewController.swift in Sources */,
+				D98D006F226983E5003FE90D /* APIManager.swift in Sources */,
 				D95DE22521B8CC2100551542 /* MovieTableViewController.swift in Sources */,
 				D99CBF1B21C62328007B80E5 /* CollectionViewCell.swift in Sources */,
-				D98D00642266EE9F003FE90D /* APIClient.swift in Sources */,
+				D98D00642266EE9F003FE90D /* NetworkHandler.swift in Sources */,
 				D9AF0F3B21BE56AC0021878E /* MovieDetailRequest.swift in Sources */,
+				D905A0EA226B033C006046BD /* RequestBuilderError.swift in Sources */,
+				D98D006A22697DE0003FE90D /* ResponseStatus.swift in Sources */,
 				D95DE22321B8CC2100551542 /* AppDelegate.swift in Sources */,
+				D98D006D226983C4003FE90D /* Enum+BoxOfficeAPI.swift in Sources */,
+				D905A0E8226B0325006046BD /* NetworkError.swift in Sources */,
 				D9629A4921C2044700F2CD04 /* PictureFullScreenViewController.swift in Sources */,
 				D99CBF1921C6231B007B80E5 /* TableViewCell.swift in Sources */,
 				D9DD718721B8E48700061069 /* DataModel.swift in Sources */,

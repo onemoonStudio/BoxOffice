@@ -20,12 +20,12 @@ class MovieTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: moviesDataRequestError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: updateDataNotification, object: nil)
         loadingIndicator.startAnimating()
+        checkData()
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: moviesDataRequestError, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.updateData(_:)), name: updateDataNotification, object: nil)
         
         networkErrorAlert = UIAlertController(title: "네트워크 에러", message: "네트워크를 확인하신 뒤 다시 시도해주세요", preferredStyle: .alert)
         networkErrorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
@@ -53,6 +53,13 @@ class MovieTableViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshHandler(_:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
         
+    }
+    
+    func checkData() {
+        loadingIndicator.startAnimating()
+        APIManager.sharedInstance.movieData(checkContainer: true, orderType: 0) { (movies) in
+            print("not now")
+        }
     }
     
     @objc func mainNetworkError(_ noti: Notification) {
@@ -102,6 +109,7 @@ extension MovieTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MovieDatasCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as?  MovieDatasCell else { return UITableViewCell() }
         let movieImagedata: Data = MovieDatas.sharedInstance.movieDatas[indexPath.row].imageData
+//        let movieImagedata: Data = APIManager.sharedInstance.movieDataContainer[indexPath.row].imageData
         
         cell.configure(indexPath.row)
         DispatchQueue.main.async {
@@ -111,7 +119,8 @@ extension MovieTableViewController: UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MovieDatas.sharedInstance.movieDatas.count
+//        return MovieDatas.sharedInstance.movieDatas.count
+        return APIManager.sharedInstance.movieDataContainer.count
     }
     
 }

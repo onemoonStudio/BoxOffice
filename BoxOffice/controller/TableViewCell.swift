@@ -35,6 +35,7 @@ class MovieDatasCell: UITableViewCell{
     
     func configure(_ index: Int) {
         let movieData: MovieData = MovieDatas.sharedInstance.movieDatas[index].basic
+//        let movieData: MovieData = APIManager.sharedInstance.movieDataContainer[index].basic
         movieTitle.text = movieData.title
         movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
         setColorForAge(movieData.grade)

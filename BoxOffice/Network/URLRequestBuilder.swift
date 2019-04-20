@@ -8,7 +8,7 @@
 
 import Foundation
 
-class URLRequestBuilder {
+struct URLRequestBuilder {
     var host: String
     var path: String?
     var method: HTTPMethod = .get
@@ -21,35 +21,30 @@ class URLRequestBuilder {
         self.path = path
     }
     
-    func set(method: HTTPMethod) -> Self {
+    mutating func set(method: HTTPMethod) {
         self.method = method
-        return self
     }
     
-    func set(path: String) -> Self {
+    mutating func set(path: String) {
         self.path = path
-        return self
     }
     
-    func set(headers: [String: String]?) -> Self {
+    mutating func set(headers: [String: String]?) {
         self.headers = headers
-        return self
     }
     
-    func set(query: [String: String]?) -> Self {
+    mutating func set(query: [String: String]?) {
         self.query = query
-        return self
     }
     
-    func set(body: [String: Any]?) -> Self {
+    mutating func set(body: [String: Any]?) {
         self.body = body
-        return self
     }
     
     func build() throws -> URLRequest {
         do {
             guard var url = URL(string: host) else {
-                throw RequestBuilderError.hostString(message: "hostString is awkward")
+                throw RequestBuilderError.hostString(message: "host is awkward")
             }
             if let path = path {
                 url.appendPathComponent(path)
@@ -69,13 +64,13 @@ class URLRequestBuilder {
                 urlRequest.addValue($1, forHTTPHeaderField: $0)
             }
             return urlRequest
-        } catch (let err ){
+        } catch (let err ) {
             throw err
         }
     }
 }
 
-fileprivate extension URL {
+private extension URL {
     mutating func appendQueryComponent(_ queryComponents: [String: String]) throws {
         var queryItems: [URLQueryItem] = []
         queryComponents.forEach {
@@ -88,9 +83,4 @@ fileprivate extension URL {
         }
         self = url
     }
-}
-
-fileprivate enum RequestBuilderError: Error {
-    case hostString(message: String)
-    case queryError(message: String)
 }
