@@ -21,7 +21,7 @@ class MovieTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingIndicator.startAnimating()
-        checkData()
+        updateData()
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.mainNetworkError(_:)), name: moviesDataRequestError, object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveData(_:)), name: didReceiveDataNotification, object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.orderingData(_:)), name: changeDataOrderNotification, object: nil)
@@ -55,10 +55,20 @@ class MovieTableViewController: UIViewController {
         
     }
     
-    func checkData() {
+    func updateData() {
         loadingIndicator.startAnimating()
-        APIManager.sharedInstance.movieData(checkContainer: true, orderType: 0) { (movies) in
-            print("not now")
+        DispatchQueue.global().async {
+            APIManager.sharedInstance.movieData(checkContainer: true, orderType: 0) { [weak self] (data, errorOccur) in
+                guard let self = self else { return }
+                if errorOccur {
+                    self.present(self.networkErrorAlert,animated: true)
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.loadingIndicator.stopAnimating()
+                }
+                
+            }
         }
     }
     
@@ -107,19 +117,17 @@ class MovieTableViewController: UIViewController {
 
 extension MovieTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: MovieDatasCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as?  MovieDatasCell else { return UITableViewCell() }
-        let movieImagedata: Data = MovieDatas.sharedInstance.movieDatas[indexPath.row].imageData
-//        let movieImagedata: Data = APIManager.sharedInstance.movieDataContainer[indexPath.row].imageData
+        guard let cell: MovieDatasCell = tableView.dequeueReusableCell(
+            withIdentifier: cellIdentifier,
+            for: indexPath
+            ) as?  MovieDatasCell else { return UITableViewCell() }
         
         cell.configure(indexPath.row)
-        DispatchQueue.main.async {
-            cell.movieImage.image = UIImage(data: movieImagedata)
-        }
-        
+
         return cell
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return MovieDatas.sharedInstance.movieDatas.count
         return APIManager.sharedInstance.movieDataContainer.count
     }
     

@@ -11,6 +11,7 @@ import Foundation
 struct APIResponse: Codable {
     let movies: [MovieData]
     let order_type: Int
+    
 }
 
 struct UpdatedMovieData {
@@ -44,13 +45,13 @@ struct MovieData: Codable {
     let id: String
     
     var infoString: String {
-        return "평점 : \(self.user_rating) 예매순위 : \(self.reservation_grade) 예매율 : \(self.reservation_rate)"
+        return "평점 : \(user_rating) 예매순위 : \(reservation_grade) 예매율 : \(reservation_rate)"
     }
     var collectionViewInfoString: String {
-        return "\(self.reservation_grade)위(\(user_rating)) / \(self.reservation_rate)%"
+        return "\(reservation_grade)위(\(user_rating)) / \(reservation_rate)%"
     }
     var openingString: String {
-        return "개봉일 : \(self.date)"
+        return "개봉일 : \(date)"
     }
 }
 
@@ -71,17 +72,17 @@ struct MovieDetail: Codable, Hashable {
     let id: String
     
     var openingString: String {
-        return "\(self.date)개봉"
+        return "\(date)개봉"
     }
     var genreAndRunningTimeString: String {
-        return "\(self.genre)/\(self.duration)분"
+        return "\(genre)/\(duration)분"
     }
     var reservationString: String {
-        return "\(self.reservation_grade)위/\(self.reservation_rate)%"
+        return "\(reservation_grade)위/\(reservation_rate)%"
     }
     var audienceString: String {
         var result: String = ""
-        var audienceNumber: Int = self.audience
+        var audienceNumber: Int = audience
         while true {
             if ( audienceNumber / 1000 > 0 && result == "" ) {
                 result = "\( String(audienceNumber%1000) )"
@@ -96,8 +97,6 @@ struct MovieDetail: Codable, Hashable {
         }
         return result
     }
-    
-    
 }
 
 struct CommentResponse: Codable {

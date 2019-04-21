@@ -34,8 +34,7 @@ class MovieDatasCell: UITableViewCell{
     }
     
     func configure(_ index: Int) {
-        let movieData: MovieData = MovieDatas.sharedInstance.movieDatas[index].basic
-//        let movieData: MovieData = APIManager.sharedInstance.movieDataContainer[index].basic
+        let movieData: MovieData = APIManager.sharedInstance.movieDataContainer[index]
         movieTitle.text = movieData.title
         movieAge.text = movieData.grade == 0 ? "전체" : String(movieData.grade)
         setColorForAge(movieData.grade)
@@ -46,7 +45,20 @@ class MovieDatasCell: UITableViewCell{
         movieDate.text = movieData.openingString
         movieImage.image = nil
         movieId.text = movieData.id
-        movieImage.image = UIImage(data: MovieDatas.sharedInstance.movieDatas[index].imageData)
+        
+        let movieImageThumbnail: String = movieData.thumb
+        
+        DispatchQueue.global().async {
+            APIManager.sharedInstance.imageData(url: movieImageThumbnail, completion: { (data) in
+                if let data = data {
+                    DispatchQueue.main.async {
+                        self.movieImage.image = UIImage(data: data)
+                    }
+                }
+            })
+        }
+        
+//        movieImage.image = UIImage(data: MovieDatas.sharedInstance.movieDatas[index].imageData)
 //        DispatchQueue.main.async {
 //            [weak self] in if let self = self {
 //                    self.movieImage.image = UIImage(data: SingletonData.sharedInstance.movieDatas[index].imageData)
