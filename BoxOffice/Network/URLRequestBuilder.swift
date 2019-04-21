@@ -16,6 +16,10 @@ struct URLRequestBuilder {
     var body: [String: Any]?
     var headers: [String: String]?
     
+    init(with url: String) {
+        self.host = url
+    }
+    
     init(with host: String, path: String?) {
         self.host = host
         self.path = path
